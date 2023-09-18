@@ -12,7 +12,7 @@ const MoviesCard = ({ movie }) => {
     <section>
       <img src={movie.poster} alt={movie.title} className="movies-card__image" />
       <div className="movies-card__info">
-        <h3 className="movies-card__title">{movie.title}</h3>
+        <h2 className="movies-card__title">{movie.title}</h2>
         {movie.isDelete ? (
           <button
             className={"movies-card__like_delete"}

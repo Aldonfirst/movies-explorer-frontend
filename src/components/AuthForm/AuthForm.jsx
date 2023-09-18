@@ -14,7 +14,7 @@ const navigateMovie = useNavigate();
     <section className="auth">
       <Logo />
       <form onSubmit={handleSubmit}>
-      <h2 className="auth__title">{title}</h2>
+      <h1 className="auth__title">{title}</h1>
         <div className="auth__inputs-container">{children}</div>
         <AuthButton 
         buttonText={buttonText}

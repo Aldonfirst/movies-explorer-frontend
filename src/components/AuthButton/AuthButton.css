@@ -4,6 +4,7 @@
     border-radius: 3px;
     background: #4285F4;
     border: 0;
+    color:#fff;
     padding: 0;
     font-size: 14px;
     font-weight: 500;
@@ -12,8 +13,10 @@
 .auth__submit-button:hover{
     opacity: 0.8;
 }
+
 .auth__submit-button_disabled {
     background: #8B8B8B;
+    color:#000;
     cursor: not-allowed;
 }
 
@@ -29,6 +32,7 @@
     text-decoration: none;
     color: #4285F4;
     font-size: 14px;
+    cursor: pointer;
 }
 
 @media screen and (max-width: 500px) {

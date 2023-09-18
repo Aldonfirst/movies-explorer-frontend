@@ -7,6 +7,7 @@ function Register(){
   const { values, errors, handleChange,isValid } = useValidationHook();
 
   return (
+    <main>
     <AuthForm
       title="Добро пожаловать!"
       buttonText="Зарегистрироваться"
@@ -15,31 +16,35 @@ function Register(){
       <MyInput
         name="userName"
         type="text"
-        placeholder="Имя"
+        placeholder="Введите ваше имя"
         value={values.userName || ""}
         onChange={handleChange}
         error={errors.userName}
+        htmlFor="Имя"
       />
       
       <MyInput
         name="email"
         type="email"
-        placeholder="E-mail"
+        placeholder="Введите e-mail"
         value={values.email || ""}
         onChange={handleChange}
         error={errors.email}
+        htmlFor="E-mail"
       />
-    
+  
       <MyInput
         name="password"
         type="password"
-        placeholder="Пароль"
+        placeholder="Введите пароль"
         value={values.password || ""}
         onChange={handleChange}
         error={errors.password}
+        htmlFor="Пароль"
       />
-       
+      
     </AuthForm>
+    </main>
   );
 };
 

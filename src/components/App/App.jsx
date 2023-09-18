@@ -12,7 +12,6 @@ import NotFound404 from '../NotFound404/NotFound404';
 function App() {
 
   return (
-<div className='wrapper'>
       <div className="page">  
         <Routes>
           <Route path="/" element={<Main/>} />
@@ -24,7 +23,6 @@ function App() {
           <Route path="*" element={<NotFound404/>} />
         </Routes>
       </div>
-</div>
   );
 }
 export default App;

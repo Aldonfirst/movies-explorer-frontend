@@ -16,8 +16,8 @@ function SavedMovies(){
 
   return (
     <>
+      <Header />
       <main className="movies">
-        <Header />
         <SearchForm />
         <div className="movies-list">
           <ul className="movies-list__container">

@@ -21,18 +21,15 @@
 }
 
 .projects__link {
-    float: right;
     color: #fff;
     text-decoration: none;
-    padding-top: 5px;
-}
-
-.projects__title-name {
+    display: flex;
+    justify-content: space-between;
     line-height: 50px;
     letter-spacing: -1.2px;
     font-size: 30px;
     margin: 0;
-    padding-bottom: 20px;
+    padding:0 0 20px;
     font-weight: 400;
 }
 
@@ -45,11 +42,11 @@
 
 @media screen and (max-width: 770px) {
     .projects {
-        padding: 0 50px 90px;
+        padding: 0 50px 70px;
         box-sizing: border-box;
     }
 
-    .projects__title-name {
+    .projects__link{
         font-size: 28px;
         letter-spacing: -1.12px;
     }
@@ -57,7 +54,7 @@
 
 @media screen and (max-width: 500px) {
     .projects {
-        padding: 0 14px 70px;
+        padding: 0 14px 49px;
         box-sizing: border-box;
     }
 
@@ -67,12 +64,9 @@
         padding-bottom: 40px;
     }
 
-    .projects__title-name {
+    .projects__link {
         font-size: 18px;
         line-height: 28px;
         letter-spacing: -0.72px;
-    }
-    .projects__link {
-        padding-top: 0px;
     }
 }

@@ -7,29 +7,34 @@ const Login = () => {
   const { values, handleChange,errors,isValid } = useValidationHook();
 
   return (
+    <main>
     <AuthForm
       title="Рады видеть!"
       buttonText="Войти"
       isValid={isValid}
+      
     >
       <MyInput
         name="email"
         type="email"
-        placeholder="E-mail"
+        placeholder="Введите e-mail"
         value={values.email || ""}
         onChange={handleChange}
         error={errors.email}
+        htmlFor="E-mail"
       />
       <MyInput
         name="password"
         type="password"
-        placeholder="Пароль"
+        placeholder="Введите пароль"
         value={values.password || ""}
         onChange={handleChange}
         error={errors.password}
+        htmlFor="Пароль"
       />
       
     </AuthForm>
+    </main>
   );
 };
 

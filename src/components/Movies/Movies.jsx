@@ -43,10 +43,9 @@ function Movies() {
   
     return (
       <>
+              <Header />
         <main className='movies'>
-          <Header />
           <SearchForm />
-  
           {isLoading ? <Preloader /> : <MoviesCardList movies={movies} />}
         </main>
         <Footer />

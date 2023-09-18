@@ -1,17 +1,19 @@
 import "./MyInput.css"
 
-function MyInput ({ name, type, placeholder, value, onChange, error }) {
+function MyInput ({ name, type, placeholder, value, onChange, error,htmlFor }) {
   return (
     <div>
-      <label className="myInput__signature">{placeholder}</label>
+      <label className="myInput__signature">{htmlFor}</label>
       <input
-        className="myInput"
+            className={`myInput ${error ? 'myInput_invalid' : ''}`}
         name={name}
         type={type}
         value={value}
         onChange={onChange}
+        placeholder={placeholder}
         minLength="2"
         maxLength="30"
+        // spellCheck={true}//орфографические ошибки 
         required
       />
       <span className="myInput__error">{error}</span>

@@ -8,7 +8,12 @@
     display: flex;
     justify-content: space-between;
     margin-top: 66px;
-    position: relative;
+    /* position: relative; */
+}
+
+.about-me__inform {
+    display: grid;
+    align-content: stretch;
 }
 
 .about-me__myName {
@@ -17,6 +22,7 @@
     padding-bottom: 18px;
     margin: 0;
     font-weight: 400;
+    letter-spacing: -2px;
 }
 
 .about-me__myAge {
@@ -38,9 +44,8 @@
     text-decoration: none;
     color: #FFF;
     font-size: 14px;
-    position: absolute;
-    bottom: 0;
-    left: 0;
+    padding: 78px 0 0;
+    align-self: flex-end;
 }
 
 .about-me__avatar {
@@ -62,14 +67,14 @@
     .about-me__myName {
         font-size: 40px;
         line-height: 40px;
-        padding-bottom: 16px;
+        padding-bottom: 11px;
         letter-spacing: -1.6px;
     }
 
     .about-me__myAge {
         font-size: 12px;
         line-height: 18px;
-        padding-bottom: 20px;
+        padding-bottom: 14px;
     }
 
     .about-me__story {
@@ -92,11 +97,12 @@
         margin-top: 66px;
     }
 
-    .about-me__inform {
+    /* .about-me__inform {
         text-align: center;
         width: calc(292px + (500 - 292) * ((100vw - 320px) / (700 - 320)));
         min-height: 261px;
     }
+     */
     .about-me__story {
         font-size: 11px;
         line-height: 16px;
@@ -108,14 +114,19 @@
         margin-left: 0;
     }
 
+    /* 
+    .about-me__github-link {
+        padding: 88px 0 0;
+     } */
+
     .about-me__myName {
-    font-size: 30px;
-    line-height: normal;
-    padding-bottom: 18px;
-    letter-spacing: -1.2px;
-    font-weight: 400;
+        font-size: 30px;
+        line-height: normal;
+        padding-bottom: 18px;
+        letter-spacing: -1.2px;
+        font-weight: 400;
     }
-   
+
 }
 
 @media screen and (max-width: 500px) {
@@ -125,8 +136,20 @@
     }
 
     .about-me__inform {
-      text-align: start;
-       padding-top: 35px;
+        text-align: start;
+        padding-top: 35px;
     }
-   
+
+
+    .about-me__github-link {
+        padding: 41px 0 0;
+    }
+
+    .about-me__myAge {
+        padding-bottom: 22px;
+        font-size: 11px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 16px;
+    }
 }

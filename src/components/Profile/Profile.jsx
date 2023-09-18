@@ -20,10 +20,12 @@ function Profile() {
   };
 
   return (
+    <>
+    <Header />
+    <main>
     <section className="profile">
-      <Header />
       <form >
-        <h2 className="profile__title">Привет,{name}!</h2>
+        <h2 className="profile__title">Привет, Виталий{name}!</h2>
         <ul className="profile__inputs-wrapper">
           <li className="profile__label">Имя
             <input
@@ -71,6 +73,8 @@ function Profile() {
         )}
       </form>
     </section>
+    </main>
+    </>
   );
 };
 

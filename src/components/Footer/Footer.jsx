@@ -10,8 +10,16 @@ const currentYear = new Date().getFullYear();
       <div className="footer__container">
         <p className="footer__year"> &copy;{currentYear}</p>
         <ul className='footer__links'>
-          <li><a href="https://practicum.yandex.ru/" className="hoverLink footer__github">Яндекс.Практикум</a></li>
-          <li><a href="https://github.com/Aldonfirst" className="hoverLink footer__github">GitHub</a></li>
+          <li><a href="https://practicum.yandex.ru/"
+           className="page__hoverLink footer__github" 
+           target="_blank" 
+           rel="noreferrer">Яндекс.Практикум</a>
+           </li>
+          <li><a href="https://github.com/Aldonfirst"
+           className="page__hoverLink footer__github" 
+           target="_blank" 
+           rel="noreferrer">GitHub</a>
+           </li>
       </ul>
       </div>
     </footer>
