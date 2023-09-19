@@ -1,0 +1,35 @@
+.auth {
+    display: grid;
+    justify-content: center;
+   align-content: center;
+    padding: 70px 0 70px;
+    box-sizing: border-box;
+    height: 100vh;
+}
+
+.auth__title {
+    margin: 40px 0 40px;
+    font-size: 24px;
+    font-weight: 500;
+}
+
+.auth__inputs-container {
+    min-height: 266px;
+    margin: 0 auto 69px;
+}
+
+@media screen and (max-width: 500px) {
+    .auth {
+    padding: 56px 0 0px;
+    justify-items: center;
+    align-content: flex-start;
+    }
+
+    .auth__title {
+        text-align: center;
+        margin: 51px 0 81px;
+    }
+    .auth__inputs-container {
+        margin: 0 auto 156px;
+    }
+}

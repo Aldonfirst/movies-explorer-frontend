@@ -1,0 +1,7 @@
+.logo {
+    width: 38px;
+    height: 38px;
+    background-image: url(../../images/logo/logo-for-header.svg);
+    background-size: cover;
+    cursor: pointer;
+}
