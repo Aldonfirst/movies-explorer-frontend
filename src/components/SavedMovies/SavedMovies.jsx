@@ -1,35 +1,52 @@
 import Footer from '../Footer/Footer';
 import Header from '../Header/Header';
-import MoviesCard from '../Movies/MoviesCard/MoviesCard';
-import SearchForm from '../Movies/SearchForm/SearchForm';
-import poster from "../../images/временный постер movie.jpg";
-import poster2 from "../../images/постер временный для проверки верстки.jpg";
-import poster3 from "../../images/временный постер 3.jpg";
 
-function SavedMovies(){
-  //временный массив 
-  const savedMovies = [
-    { id: 1, title: "Сохраненный фильм 1", duration: "1.11 мин", poster: poster, isDelete: true },
-    { id: 2, title: "Сохраненный фильм 2", duration: "1.28 мин", poster: poster3, isDelete: true},
-    { id: 3, title: "Сохраненный фильм 3", duration: "1.43 мин", poster: poster2, isDelete: true},
-  ];
+import SearchForm from '../Movies/SearchForm/SearchForm';
+
+import MoviesCardList from '../Movies/MoviesCardList/MoviesCardList';
+import { useState } from 'react';
+import { useContext } from 'react';
+import { MoviesContext } from '../contexts/MovieContext';
+import { filterMovies } from '../../utils/filterMovies';
+import { useMemo } from 'react';
+
+function SavedMovies() {
+  const { savedMovies } = useContext(MoviesContext);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [isChecked, setIsChecked] = useState(false);
+  const [formError, setFormError] = useState(null);
+
+  const filteredMovies = useMemo(() => filterMovies(savedMovies, searchTerm, isChecked), [savedMovies, searchTerm, isChecked]);
+
+  function handleSearch(term, isChecked) {
+    setSearchTerm(term);
+    setIsChecked(isChecked);
+  }
 
   return (
     <>
       <Header />
       <main className="movies">
-        <SearchForm />
-        <div className="movies-list">
-          <ul className="movies-list__container">
-            {savedMovies.map((movie) => (
-              <MoviesCard key={movie.id} movie={movie} />
-            ))}
-          </ul>
-        </div>
+        <SearchForm
+          onSubmit={handleSearch}
+          searchTerm={searchTerm || ""}
+          isChecked={isChecked}
+          onError={setFormError}
+          isOnSavedMoviesPage={true}
+        />
+        {formError &&    <span className="movies__whatHappened">{formError}</span>}
+        {filteredMovies.length === 0 &&
+          <span className="movies__whatHappened">Нет сохраненных фильмов</span>}
+        <MoviesCardList
+          movies={filteredMovies}
+          isSaved={true}
+        />
       </main>
       <Footer />
     </>
   );
-};
+}
 
 export default SavedMovies;
+
+

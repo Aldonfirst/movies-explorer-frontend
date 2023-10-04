@@ -3,55 +3,101 @@ import MoviesCardList from "./MoviesCardList/MoviesCardList";
 import SearchForm from "./SearchForm/SearchForm";
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
-import poster from "../../images/временный постер movie.jpg";
-import poster2 from "../../images/постер временный для проверки верстки.jpg";
-import poster3 from "../../images/временный постер 3.jpg"
 import { useState } from "react";
 import { useEffect } from "react";
 import Preloader from "../Preloader/Preloader";
+import { CurrentUserContext } from "../contexts/Сontexts";
+import { useContext } from "react";
+import { MoviesContext } from "../contexts/MovieContext";
+import { getMovies } from "../../utils/MoviesApi";
+import { useCallback } from "react";
+import { filterMovies } from "../../utils/filterMovies";
 
 function Movies() {
-  //временный массив  на время верстки
-  const movies = [
-    { id: 1, title: "Фильмец 1 Смешной постер: Приключения алкашей  за Пивом Живым", duration: "1.11 мин" , poster: poster },
-    { id: 2, title: "Фильмец 2", duration: "1.28 мин" , poster: poster3 },
-    { id: 3, title: "Фильмец 3 Гарри Поттер и зло в Хогвардсе", duration: "1.43 мин" , poster: poster2 },
-    { id: 4, title: "Фильмец 4", duration: "1.24 мин" , poster: poster },
-    { id: 5, title: "Фильмец 5 ", duration: "1.55 мин" , poster: poster3 },
-    { id: 6, title: "Фильмец 6 Смешной постер: Гарри Поттер и Голубцы в Хогвардсе", duration: "1.36 мин" , poster: poster2 },
-    { id: 7, title: "Фильмец 7", duration: "1.11 мин" , poster: poster },
-    { id: 8, title: "Фильмец 8", duration: "1.41 мин" , poster: poster },
-    { id: 9, title: "Фильмец 9", duration: "1.11 мин" , poster: poster3 },
-    { id: 10, title: "Фильмец 10", duration: "1.11 мин" , poster: poster2 },
-    { id: 11, title: "Фильмец 11", duration: "1.17 мин" , poster: poster },
-    { id: 12, title: "Фильмец 12", duration: "1.21 мин" , poster: poster },
-    { id: 13, title: "Фильмец 13", duration: "55 мин" , poster: poster },
-    { id: 14, title: "Фильмец 14", duration: "23 мин" , poster: poster2 },
-    { id: 15, title: "Фильмец 15", duration: "1.01 мин" , poster: poster3 },
-    { id: 16, title: "Фильмец 16", duration: "1.18 мин" , poster: poster },
-    { id: 17, title: "Фильмец 17", duration: "1.00 мин" , poster: poster2 },
-    { id: 18, title: "Фильмец 18", duration: "1.30 мин" , poster: poster },
-    { id: 19, title: "Фильмец 19", duration: "1.14 мин" , poster: poster3 },
-  ];
-    const [isLoading, setIsLoading] = useState(true);
-  
-    useEffect(() => {
+  const { savedMovies, saveMovie, removeMovie, error } = useContext(MoviesContext);
+  const { currentUser } = useContext(CurrentUserContext);
+  const [fetchedMovies, setFetchedMovies] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [formError, setFormError] = useState("");
+  const [searchKeyword, setSearchKeyword] = useState('');
+  const [isChecked, setIsChecked] = useState(false);
+  const [hasNotSearch, setHasNotSearch] = useState(false);
+  //  функция для получения и фильтрации фильмов
+  const fetchMovies = useCallback(async (searchTerm = '', isChecked = false) => {
+    if (!currentUser) {
+      return;
+    }
+    setIsLoading(true);
+    setFormError("");
+    try {
+      // Получаю фильмы из локального хранилища или с сервера
+      let data;
+      const initialMovies = JSON.parse(localStorage.getItem('movies'));
+      if (!initialMovies) {
+        data = await getMovies();
+        localStorage.setItem('movies', JSON.stringify(data));
+      } else {
+        data = initialMovies;
+      }
+
+      // Фильтрация фильмов по поисковому запросу и чекбоксу
+      const filteredMovies = filterMovies(data, searchTerm, isChecked);
+      setFetchedMovies(filteredMovies);
+      // Сохранение поискового запроса и состояния чекбокса в локальном хранилище
+      localStorage.setItem('searchKeyword', searchTerm);
+      localStorage.setItem('isChecked', JSON.stringify(isChecked));
+      setHasNotSearch(true);
+    } catch (error) {
+      setFormError(error.message);
+    } finally {
       setTimeout(() => {
         setIsLoading(false);
-      }, 1000);
-    }, []);
-  
-    return (
-      <>
-              <Header />
-        <main className='movies'>
-          <SearchForm />
-          {isLoading ? <Preloader /> : <MoviesCardList movies={movies} />}
-        </main>
-        <Footer />
-      </>
-    );
-  }
-  
-  export default Movies;
+      }, 500);
+    }
+  }, [currentUser]);
+  // useEffect для восстановления состояния при монтировании компонента
+  useEffect(() => {
+    const savedSearch = localStorage.getItem('searchKeyword');
+    const savedCheckbox = JSON.parse(localStorage.getItem('isChecked'));
+    if (savedSearch || savedCheckbox) {
+      setSearchKeyword(savedSearch);
+      setIsChecked(savedCheckbox);
+      fetchMovies(savedSearch, savedCheckbox);
+    }
+  }, [currentUser, fetchMovies]);
+  // Функция для проверки, сохранен ли фильм
+  const isSaved = (movie) => savedMovies.find((mov) => mov._id === movie._id);
 
+  return (
+    <>
+      <Header />
+      <main className="movies">
+        <SearchForm
+          onSubmit={fetchMovies}
+          searchTerm={searchKeyword}
+          isChecked={isChecked}
+          onError={setFormError}
+        />
+        {isLoading ? (
+          <Preloader />
+        ) : error ? (
+          <p className="movies__whatHappened">{error.message}</p>
+        ) : formError ? (
+          <p>{formError}</p>
+        ) : hasNotSearch && fetchedMovies.length === 0 ? (
+          <span className="movies__whatHappened">"Ничего не найдено" &#129335;&#128583;</span>
+        ) : (
+          <MoviesCardList
+            movies={fetchedMovies}
+            isSaved={isSaved}
+            saveMovie={saveMovie}
+            removeMovie={removeMovie}
+          />
+        )}
+      </main>
+      <Footer />
+    </>
+  );
+}
+
+export default Movies;

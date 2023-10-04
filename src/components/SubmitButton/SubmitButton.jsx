@@ -1,8 +1,8 @@
-import "./AuthButton.css"
+import "./SubmitButton.css"
 import { Link } from "react-router-dom";
 
 
-const AuthButton = ({ buttonText, isValid }) => {
+const SubmitButton = ({ buttonText, isValid }) => {
     return (
       <>
         <button
@@ -32,4 +32,4 @@ const AuthButton = ({ buttonText, isValid }) => {
     );
   };
   
-  export default AuthButton;
+  export default SubmitButton;
