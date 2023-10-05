@@ -45,4 +45,4 @@ const AuthApi = {
   authorize
 }
 
-export default AuthApi
+export default AuthApi;
