@@ -18,7 +18,7 @@ const checkResponseStatus = async (response) => {
   }
 };
 
-export const getUser = async (token) => {
+export async function getUser (token) {
   const res = await fetch(`${BASE_URL}/users/me`, {
     method: 'GET',
     headers: {
@@ -28,7 +28,7 @@ export const getUser = async (token) => {
   return checkResponseStatus(res);
 };
 
-export const updateUser = async (user) => {
+export async function updateUser(user) {
   const res = await fetch(`${BASE_URL}/users/me`, {
     method: 'PATCH',
     headers: {

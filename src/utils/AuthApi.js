@@ -1,7 +1,7 @@
 // const BASE_URL = "http://localhost:3000";
 const BASE_URL = 'https://aldonmovie.nomoredoma.nomoredomainsicu.ru';
 
-const checkResponseStatus = async (response) => {
+async function checkResponseStatus(response) {
   if (response.ok) {
     return response.json();
   }
@@ -20,21 +20,24 @@ const checkResponseStatus = async (response) => {
   }
 };
 
-export const register = async (data) => {
+export async function register (data){
   const res = await fetch(`${BASE_URL}/signup`, {
     method: "POST",
     credentials: 'include',
-    headers: { "Content-Type": "application/json" },
+    headers: { "Content-Type": "application/json",
+    'Authorization': `Bearer ${localStorage.getItem('jwt')}`
+   },
     body: JSON.stringify(data),
   });
   return checkResponseStatus(res);
 };
 
-export const authorize = async (data) => {
+export async function authorize(data) {
   const res = await fetch(`${BASE_URL}/signin`, {
     method: "POST",
     credentials: 'include',
-    headers: { "Content-Type": "application/json" },
+    headers: { "Content-Type": "application/json",
+    'Authorization': `Bearer ${localStorage.getItem('jwt')}` },
     body: JSON.stringify(data),
   });
   return checkResponseStatus(res);
