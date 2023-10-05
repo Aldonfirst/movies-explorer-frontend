@@ -1,4 +1,3 @@
-const base_url = 'https://api.nomoreparties.co/beatfilm-movies'
 
 function getResponse(res) {
   return res.json().then((json) => {
@@ -7,5 +6,5 @@ function getResponse(res) {
 }
 
 export function getMovies(){
-  return fetch(`${base_url}`).then((res) => getResponse(res))
+  return fetch('https://api.nomoreparties.co/beatfilm-movies').then((res) => getResponse(res))
 }

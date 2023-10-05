@@ -12,7 +12,6 @@ import CurrentUserProvider from '../contexts/Сontexts';
 import { MoviesProvider } from '../contexts/MovieContext';
 
 //Все обработчики запросов вложены в свои контексты для удобства и очистки файла App
-
 function App() {
   return (
     <div className="page">
