@@ -1,6 +1,5 @@
 .page {
     padding: 0;
-    /* width: 100%; */
     max-width: 1280px;
     display: flex;
     flex-direction: column;
@@ -10,7 +9,6 @@
     height: 100%;
     font-weight: 400;
     font-family: 'Inter', Arial, sans-serif;
-
 }
 
 .page__nav {

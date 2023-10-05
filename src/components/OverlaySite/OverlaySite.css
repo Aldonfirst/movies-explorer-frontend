@@ -1,0 +1,14 @@
+.overlay-site {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0); 
+    z-index: 1;
+    transition: background-color 0.1s ease-in-out;
+  }
+
+  .overlay-site_open {
+    background-color: rgba(0, 0, 0, 0.3);
+  }

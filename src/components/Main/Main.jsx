@@ -6,16 +6,18 @@ import AboutMe from "./AboutMe/AboutMe";
 import Portfolio from "./Portfolio/Portfolio";
 import Footer from "../Footer/Footer";
 
-function Main() {
+function Main({isLoggedIn}) {
   return (
-    <main>
-      <Promo />
-      <AboutProject />
-      <Techs />
-      <AboutMe />
-      <Portfolio />
+    <>
+      <main>
+        <Promo isLoggedIn={isLoggedIn}/>
+        <AboutProject />
+        <Techs />
+        <AboutMe />
+        <Portfolio />
+      </main>
       <Footer />
-    </main>
+    </>
   );
 }
 

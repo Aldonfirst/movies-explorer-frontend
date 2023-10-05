@@ -8,7 +8,6 @@
     display: flex;
     justify-content: space-between;
     margin-top: 66px;
-    /* position: relative; */
 }
 
 .about-me__inform {
@@ -97,12 +96,7 @@
         margin-top: 66px;
     }
 
-    /* .about-me__inform {
-        text-align: center;
-        width: calc(292px + (500 - 292) * ((100vw - 320px) / (700 - 320)));
-        min-height: 261px;
-    }
-     */
+ 
     .about-me__story {
         font-size: 11px;
         line-height: 16px;
@@ -113,11 +107,6 @@
         min-height: 352px;
         margin-left: 0;
     }
-
-    /* 
-    .about-me__github-link {
-        padding: 88px 0 0;
-     } */
 
     .about-me__myName {
         font-size: 30px;

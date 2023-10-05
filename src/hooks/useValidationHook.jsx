@@ -4,7 +4,6 @@ function useValidationHook() {
   const [errors, setErrors] = useState({});
   const [isValid, setIsValid] = useState(false);
 
-  
   const handleChange = useCallback((evt) => {
     const { target } = evt;
     const { name, value } = target;
@@ -19,7 +18,7 @@ function useValidationHook() {
     setIsValid(newIsValid);
   }, []);
 
-  return { values, handleChange, errors, isValid, resetForm };
+  return { values, handleChange, errors, isValid, resetForm, setValues, setIsValid };
 }
 
 export default useValidationHook;

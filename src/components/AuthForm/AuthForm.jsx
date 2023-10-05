@@ -1,25 +1,24 @@
 import "./AuthForm.css"
 import Logo from "../HeaderLogo/Logo";
-import AuthButton from "../AuthButton/AuthButton";
-import { useNavigate } from "react-router-dom";
-const AuthForm = ({ title, buttonText, children, isValid }) => {
-  
-const navigateMovie = useNavigate();
-  function handleSubmit(evt) {
-    evt.preventDefault();
-    navigateMovie("/movies")
-  }
+
+import SubmitButton from "../SubmitButton/SubmitButton";
+
+function AuthForm({ handleSubmit, title, buttonText, children, isValid, error }) {
 
   return (
     <section className="auth">
       <Logo />
-      <form onSubmit={handleSubmit}>
-      <h1 className="auth__title">{title}</h1>
-        <div className="auth__inputs-container">{children}</div>
-        <AuthButton 
-        buttonText={buttonText}
-        isValid={isValid} 
-        />
+      <form className="auth__form"
+      onSubmit={handleSubmit}
+       noValidate>
+        <h1 className="auth__title">{title}</h1>
+        <div className="auth__inputs-container">
+          {children}
+        </div>
+        <span className="auth__error">{error}</span>
+        <SubmitButton
+          buttonText={buttonText}
+          isValid={isValid} />
       </form>
     </section>
   );

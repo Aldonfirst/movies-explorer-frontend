@@ -13,12 +13,14 @@ const currentYear = new Date().getFullYear();
           <li><a href="https://practicum.yandex.ru/"
            className="page__hoverLink footer__github" 
            target="_blank" 
-           rel="noreferrer">Яндекс.Практикум</a>
+           rel="noreferrer"
+           >Яндекс.Практикум</a>
            </li>
           <li><a href="https://github.com/Aldonfirst"
            className="page__hoverLink footer__github" 
            target="_blank" 
-           rel="noreferrer">GitHub</a>
+           rel="noreferrer"
+           >GitHub</a>
            </li>
       </ul>
       </div>

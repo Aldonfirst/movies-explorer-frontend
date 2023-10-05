@@ -1,17 +1,17 @@
+import { useState } from "react";
 import "./FilterCheckbox.css"
-import React, { useState } from 'react';
 
-const FilterCheckbox = () => {
+const FilterCheckbox = ({ onChange }) => {
   const [isChecked, setIsChecked] = useState(false);
 
   const handleClick = () => {
     setIsChecked(!isChecked);
+    onChange()
   }
 
   return (
-<div className="checkbox">  
-    <label className={`checkbox__click ${isChecked ? "checkbox__click_active" : ""}`}
-      onClick = {handleClick} >
+<div className="checkbox" onClick={handleClick}>  
+    <label className={`checkbox__click ${isChecked ? "checkbox__click_active" : ""}`}>
       <span className="checkbox__circle"></span>
     </label>
     <p className="checkbox__change-title">Короткометражки</p>

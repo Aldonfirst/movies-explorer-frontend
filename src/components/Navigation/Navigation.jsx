@@ -1,6 +1,7 @@
 import { Link, useLocation} from 'react-router-dom';
 import "./Navigation.css"
-function Navigation({ isMenuOpen, closeMenu}) {
+import OverlaySite from '../OverlaySite/OverlaySite';
+function Navigation({ isMenuOpen, closeMenu, toggleMenu}) {
 
     //перекраска  логотипа  у кнопки Аккаунта и UI cсылок
     const location = useLocation();
@@ -10,6 +11,7 @@ function Navigation({ isMenuOpen, closeMenu}) {
   //===========================================
   
   return (
+    <>
     <nav className={`navigation ${isMenuOpen ? 'navigation_open' : ''}`}>
       <button className="navigation__close-burger" onClick={closeMenu}>&#215;</button>
       <div className="navigation__links">
@@ -28,6 +30,8 @@ function Navigation({ isMenuOpen, closeMenu}) {
         <span className={`navigation__login-button-account${homePage ? '-logo_blue' : '-logo'}`} />
       </Link>
     </nav>
+    {isMenuOpen && <OverlaySite isMenuOpen={isMenuOpen} closeMenu={closeMenu} />}
+    </>
   );
 }
 

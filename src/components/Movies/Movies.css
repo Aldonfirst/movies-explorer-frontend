@@ -1,17 +1,29 @@
-.movies{
+.movies {
     padding: 0 70px;
     width: 100%;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
 }
+
+.movies__whatHappened {
+    color: #797979;
+    font-size: 20px;
+    padding:10px 30px;
+}
+
 @media screen and (max-width: 770px) {
-    .movies{
+    .movies {
         padding: 0 30px;
     }
 }
+
 @media screen and (max-width: 500px) {
-    .movies{
+    .movies {
         padding: 0 10px;
+    }
+    .movies__whatHappened { 
+        font-size: 15px;
+        text-align: center;
     }
 }
