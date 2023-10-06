@@ -1,22 +1,10 @@
-// const BASE_URL = 'http://localhost:3000';
+// const BASE_URL = 'http://localhost:3011';
  const BASE_URL = 'https://aldonmovie.nomoredoma.nomoredomainsicu.ru';
 
-const checkResponseStatus = async (response) => {
-  if (response.ok) {
-    return response.json();
-  }
-  let errorData = {};
-  try {
-    errorData = await response.json();
-  } catch (err) {
-    console.error('Error:', err);
-  }
-  if (errorData.message) {
-    throw new Error(errorData.message);
-  } else {
-    throw new Error(`Error: ${response.status}`);
-  }
-};
+ function checkResponseStatus(res) {
+  if (res.ok) return res.json();
+  return Promise.reject(`Ошибка ${res.status}`);
+}
 
 export async function getUser (token) {
   const res = await fetch(`${BASE_URL}/users/me`, {

@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+
 import Preloader from "../Preloader/Preloader";
 import MainApi from "../../utils/MainApi";
 import AuthApi from "../../utils/AuthApi";
@@ -14,7 +14,7 @@ const CurrentUserProvider = ({ children }) => {
 
   const [currentUser, setCurrentUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
-  const [apiErrMsg, setApiErrMsg] = useState(null);
+  const [apiErrMsg, setApiErrMsg] = useState("");
 
 //Получение токена и проброс в локальное хранилище
   useEffect(() => {
@@ -36,7 +36,7 @@ const CurrentUserProvider = ({ children }) => {
 //выход из аккаунта и сброс значений 
   function handleSignOut() {
     setCurrentUser(null);
-    setApiErrMsg(null);
+    setApiErrMsg("");
     navigate("/");
     localStorage.removeItem('jwt');
     localStorage.removeItem('searchKeyword');
@@ -45,10 +45,9 @@ const CurrentUserProvider = ({ children }) => {
     
   }
 //Функция регистрации пользователя
-  const handleRegister = useCallback(
-    async (data) => {
+  async function handleRegister (data) {
       try {
-        setApiErrMsg(null);
+        setApiErrMsg("");
         await AuthApi.register(data);
         const { token } = await AuthApi.authorize({
           email: data.email,
@@ -56,37 +55,34 @@ const CurrentUserProvider = ({ children }) => {
         });
         localStorage.setItem("jwt", token);
         setCurrentUser(data);
-        setApiErrMsg(null);
+        setApiErrMsg("");
         navigate("/movies");
       } catch (err) {
-        setApiErrMsg('Ошибка регистрации. Пожалуйста, попробуйте еще раз.');
-      } finally {
-        setTimeout(() => setApiErrMsg(''), 2000);
-      }
-    },
-    [navigate]
-  );
+        setApiErrMsg('Ошибка регистрации');
+      } 
+      // finally {
+      //   setTimeout(() => setApiErrMsg(""), 2000);
+      // }
+    }
 //Функция авторизации пользователя
-  const handleAuthorize = useCallback(
-    async (data) => {
-      setApiErrMsg(null);
+  async function handleAuthorize(data){
+      setApiErrMsg("");
       try {
         const { token } = await AuthApi.authorize(data);
         localStorage.setItem("jwt", token);
         return MainApi.getUser(token)
           .then((userData) => {
             setCurrentUser(userData);
-            setApiErrMsg(null);
+            setApiErrMsg("");
             navigate("/movies");
           });
       } catch (err) {
-        setApiErrMsg('Ошибка при авторизации. Пожалуйста, попробуйте еще раз.');
-      } finally {
-        setTimeout(() => setApiErrMsg(''), 2000);
-      }
-    },
-    [navigate]
-  );
+        setApiErrMsg('Ошибка при авторизации.');
+      } 
+      // finally {
+      //   setTimeout(() => setApiErrMsg(""), 2000);
+      // }
+    }
 
   if (isLoading) {
     return <Preloader/>;
