@@ -10,7 +10,6 @@ import NotFound404 from '../NotFound404/NotFound404';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import CurrentUserProvider from '../contexts/Сontexts';
 import { MoviesProvider } from '../contexts/MovieContext';
-
 //Все обработчики запросов вложены в свои контексты для удобства и очистки файла App
 function App() {
   return (

@@ -56,7 +56,7 @@ function Profile() {
       <main>
         <section className="profile">
           <form noValidate onSubmit={handleSubmit}>
-            <h2 className="profile__title">Привет, {currentUser?.name || 'Гость'}!</h2>
+            <h2 className="profile__title">Привет, {currentUser.name || 'Гость'}!</h2>
             <ul className="profile__inputs-wrapper">
               <li className="profile__label">
                 Имя
