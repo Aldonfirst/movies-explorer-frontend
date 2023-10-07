@@ -33,16 +33,15 @@ const CurrentUserProvider = ({ children }) => {
     };
     fetchCurrentUser();
   }, []);
+
 //выход из аккаунта и сброс значений 
   function handleSignOut() {
     setCurrentUser(null);
     setApiErrMsg("");
-    navigate("/");
     localStorage.removeItem('jwt');
     localStorage.removeItem('searchKeyword');
     localStorage.removeItem('isChecked');
-    localStorage.removeItem('movies');
-    
+    localStorage.removeItem('movies'); 
   }
 //Функция регистрации пользователя
   async function handleRegister (data) {
@@ -53,13 +52,11 @@ const CurrentUserProvider = ({ children }) => {
           email: data.email,
           password: data.password
         });
-console.log(token)
         localStorage.setItem("jwt", token);
         setCurrentUser(data);
         setApiErrMsg("");
         navigate("/movies");
       } catch (err) {
-        console.log(err)
         setApiErrMsg('Ошибка регистрации');
       } 
       finally {
@@ -69,17 +66,13 @@ console.log(token)
 //Функция авторизации пользователя
   async function handleAuthorize(data){
       try {
-        const { token } = await AuthApi.authorize({
+        const res = await AuthApi.authorize({
           email: data.email,
           password: data.password
         });
-        localStorage.setItem("jwt", token);
-        return MainApi.getUser(token)
-          .then((userData) => {
-            console.log(userData)
-            setApiErrMsg("");
-            navigate("/movies");
-          });
+        localStorage.setItem("jwt", res.token);
+        setCurrentUser(data);
+        navigate("/movies");
       } catch (err) {
         setApiErrMsg('Ошибка при авторизации.');
       } 

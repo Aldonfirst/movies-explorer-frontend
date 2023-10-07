@@ -10,7 +10,7 @@ function checkResponseStatus(res) {
 export async function register (data){
   const res = await fetch(`${BASE_URL}/signup`, {
     method: "POST",
-    // credentials: 'include',
+
     headers: { "Content-Type": "application/json",
     'Authorization': `Bearer ${localStorage.getItem('jwt')}`
    },
@@ -20,10 +20,9 @@ export async function register (data){
 };
 
 export async function authorize(data) {
-  console.log(data)
   const res = await fetch(`${BASE_URL}/signin`, {
     method: "POST",
-    // credentials: 'include',
+
     headers: { "Content-Type": "application/json",
     'Authorization': `Bearer ${localStorage.getItem('jwt')}` },
     body: JSON.stringify(data),
