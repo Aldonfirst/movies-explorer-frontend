@@ -13,7 +13,7 @@ function Profile() {
   const { currentUser, setCurrentUser, handleSignOut, apiErrMsg, setApiErrMsg } = useContext(CurrentUserContext);
   const [isEditing, setIsEditing] = useState(false);
   const { values, handleChange, errors, isValid, resetForm }
-   = useValidationHook({ email:currentUser.name, password: currentUser.email });
+   = useValidationHook({ email: currentUser?.name || '', password: currentUser?.email || '' });
   useEffect(() => {
     if (currentUser) {
       resetForm({
@@ -113,7 +113,7 @@ function Profile() {
                 >
                   Редактировать
                 </button>
-                <Link to="/signin" className="profile__link" onClick={handleSignOut}>
+                <Link to="/" className="profile__link" onClick={handleSignOut}>
                   Выйти из аккаунта
                 </Link>
               </div>

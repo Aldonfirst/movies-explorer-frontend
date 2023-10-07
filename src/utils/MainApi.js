@@ -35,7 +35,6 @@ export const getMovies = async () => {
   const res = await fetch(`${BASE_URL}/movies`, {
     method: 'GET',
     headers: {
-      "Content-Type": "application/json",
       'Authorization': `Bearer ${localStorage.getItem('jwt')}`
     },
   });
