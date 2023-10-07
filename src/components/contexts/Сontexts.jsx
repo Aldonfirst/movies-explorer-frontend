@@ -53,11 +53,13 @@ const CurrentUserProvider = ({ children }) => {
           email: data.email,
           password: data.password
         });
+console.log(token)
         localStorage.setItem("jwt", token);
         setCurrentUser(data);
         setApiErrMsg("");
         navigate("/movies");
       } catch (err) {
+        console.log(err)
         setApiErrMsg('Ошибка регистрации');
       } 
       finally {
@@ -66,13 +68,15 @@ const CurrentUserProvider = ({ children }) => {
     }
 //Функция авторизации пользователя
   async function handleAuthorize(data){
-      setApiErrMsg("");
       try {
-        const { token } = await AuthApi.authorize(data);
+        const { token } = await AuthApi.authorize({
+          email: data.email,
+          password: data.password
+        });
         localStorage.setItem("jwt", token);
         return MainApi.getUser(token)
           .then((userData) => {
-            setCurrentUser(userData);
+            console.log(userData)
             setApiErrMsg("");
             navigate("/movies");
           });
