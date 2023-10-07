@@ -60,9 +60,9 @@ const CurrentUserProvider = ({ children }) => {
       } catch (err) {
         setApiErrMsg('Ошибка регистрации');
       } 
-      // finally {
-      //   setTimeout(() => setApiErrMsg(""), 2000);
-      // }
+      finally {
+        setTimeout(() => setApiErrMsg(""), 2000);
+      }
     }
 //Функция авторизации пользователя
   async function handleAuthorize(data){
@@ -79,9 +79,9 @@ const CurrentUserProvider = ({ children }) => {
       } catch (err) {
         setApiErrMsg('Ошибка при авторизации.');
       } 
-      // finally {
-      //   setTimeout(() => setApiErrMsg(""), 2000);
-      // }
+      finally {
+        setTimeout(() => setApiErrMsg(""), 2000);
+      }
     }
 
   if (isLoading) {

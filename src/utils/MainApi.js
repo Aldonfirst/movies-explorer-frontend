@@ -1,4 +1,4 @@
-// const BASE_URL = 'http://localhost:3011';
+// const BASE_URL = 'http://localhost:3000';
  const BASE_URL = 'https://aldonmovie.nomoredoma.nomoredomainsicu.ru';
 
  function checkResponseStatus(res) {
