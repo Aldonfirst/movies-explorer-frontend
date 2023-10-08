@@ -2,16 +2,17 @@ import AuthForm from '../AuthForm/AuthForm';
 import MyInput from '../MyInput/MyInput';
 import "./Register.css";
 import useValidationHook from "../../hooks/useValidationHook";
-import { CurrentUserContext } from '../contexts/Сontexts';
+import { CurrentUserContext } from '../Contexts/UserСontext';
 import { useContext } from 'react';
 
 function Register() {
   const { values, errors, handleChange, isValid, resetForm }
     = useValidationHook({ email: '', name: '', password: '' });
-
   const { apiErrMsg, handleRegister } = useContext(CurrentUserContext);
+
   const handleSubmit = (event) => {
     event.preventDefault();
+    
     handleRegister({
       name: values.userName,
       email: values.email,

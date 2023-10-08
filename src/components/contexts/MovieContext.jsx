@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useContext } from "react";
-import { CurrentUserContext } from "./Сontexts";
+
 import { useCallback } from "react";
 import { createContext } from "react";
 import api from "../../utils/MainApi";
 import MainApi from "../../utils/MainApi";
+import { CurrentUserContext } from "./UserСontext";
 
 export const MoviesContext = createContext([]);
 

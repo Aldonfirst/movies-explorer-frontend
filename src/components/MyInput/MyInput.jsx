@@ -1,3 +1,4 @@
+import { emailRegex } from "../constants/constants";
 import "./MyInput.css"
 
 function MyInput ({ name, type, placeholder, value, onChange, error,htmlFor }) {
@@ -12,10 +13,9 @@ function MyInput ({ name, type, placeholder, value, onChange, error,htmlFor }) {
         value={value}
         onChange={onChange}
         placeholder={placeholder}
-        minLength="2"
+        minLength="3"
         maxLength="30"
-        // spellCheck={true}//орфографические ошибки 
-        
+        pattern={emailRegex.source}
         required
       />
       <span className="myInput__error">{error}</span>

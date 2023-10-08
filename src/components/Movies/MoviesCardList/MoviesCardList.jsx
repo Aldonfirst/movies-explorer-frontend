@@ -3,7 +3,7 @@ import MoviesCard from "../MoviesCard/MoviesCard";
 import { useEffect, useState } from "react";
 import "./MoviesCardList.css";
 import useResizeHook from "../../../hooks/useResizeHook";
-import { MoviesContext } from "../../contexts/MovieContext";
+import { MoviesContext } from "../../Contexts/MovieContext";
 import { useContext } from "react";
 
 function MoviesCardList({ isSaved,movies }) {

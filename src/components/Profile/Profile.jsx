@@ -5,9 +5,10 @@ import Header from "../Header/Header";
 import useValidationHook from "../../hooks/useValidationHook";
 import { useContext } from "react";
 import { useEffect } from "react";
-import { CurrentUserContext} from "../contexts/Сontexts";
+
 import MainApi from "../../utils/MainApi";
 import { useCallback } from "react";
+import { CurrentUserContext } from "../Contexts/UserСontext";
 
 function Profile() {
   const { currentUser, setCurrentUser, handleSignOut, apiErrMsg, setApiErrMsg } = useContext(CurrentUserContext);

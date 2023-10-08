@@ -6,7 +6,7 @@ import SearchForm from '../Movies/SearchForm/SearchForm';
 import MoviesCardList from '../Movies/MoviesCardList/MoviesCardList';
 import { useState } from 'react';
 import { useContext } from 'react';
-import { MoviesContext } from '../contexts/MovieContext';
+import { MoviesContext } from '../Contexts/MovieContext';
 import { filterMovies } from '../../utils/filterMovies';
 import { useMemo } from 'react';
 

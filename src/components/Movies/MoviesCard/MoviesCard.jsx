@@ -1,7 +1,7 @@
 import { useState } from "react";
 import "./MoviesCard.css"
 import { useEffect } from "react";
-import { MoviesContext } from "../../contexts/MovieContext";
+import { MoviesContext } from "../../Contexts/MovieContext";
 import { useContext } from "react";
 import { useLocation } from "react-router-dom";
 import { useCallback } from "react";
