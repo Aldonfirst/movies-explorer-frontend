@@ -11,7 +11,6 @@ export const CurrentUserContext = createContext({});
 
 const CurrentUserProvider = ({ children }) => {
   const navigate = useNavigate();
-
   const [currentUser, setCurrentUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [apiErrMsg, setApiErrMsg] = useState("");
@@ -43,6 +42,7 @@ const CurrentUserProvider = ({ children }) => {
     localStorage.removeItem('isChecked');
     localStorage.removeItem('movies'); 
   }
+
 //Функция регистрации пользователя
   async function handleRegister (data) {
       try {
@@ -63,6 +63,7 @@ const CurrentUserProvider = ({ children }) => {
         setTimeout(() => setApiErrMsg(""), 2000);
       }
     }
+
 //Функция авторизации пользователя
   async function handleAuthorize(data){
       try {

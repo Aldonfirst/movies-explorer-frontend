@@ -19,7 +19,6 @@ export function MoviesProvider({ children }) {
         try {
           const movies = await MainApi.getMovies();
           setSavedMovies(movies);
-         
         } catch (error) {
           setError(error);
         }
