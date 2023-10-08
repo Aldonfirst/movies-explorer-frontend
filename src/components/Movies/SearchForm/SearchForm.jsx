@@ -6,8 +6,15 @@ import { useState } from "react";
 import FilterCheckbox from "../FilterCheckbox/FilterCheckbox";
 
 function SearchForm({ onSubmit, searchKeyword, isChecked, onError, isOnSavedMoviesPage }) {
-  const [input, setInput] = useState(searchKeyword || '');
-  const [checkbox, setCheckbox] = useState(isChecked || false);
+  const [input, setInput] = useState(() => {
+    const savedSearch = localStorage.getItem('searchKeyword');
+    return savedSearch !== null ? savedSearch : '';
+  });
+
+const [checkbox, setCheckbox] = useState(() => {
+  const savedCheckbox = JSON.parse(localStorage.getItem('isChecked'));
+  return savedCheckbox !== null ? savedCheckbox : false;
+});
   
  // Функция для обработки изменения текстового поля
  const handleInputChange = (evt) => {
@@ -18,6 +25,7 @@ function SearchForm({ onSubmit, searchKeyword, isChecked, onError, isOnSavedMovi
 const handleCheckboxChange = useCallback(() => {
   const newCheckboxState = !checkbox;
   setCheckbox(newCheckboxState);
+  localStorage.setItem('isChecked', JSON.stringify(newCheckboxState));
   onSubmit(input, newCheckboxState);
 }, [checkbox, input, onSubmit]);
 
@@ -52,7 +60,7 @@ return (
         Найти
       </button>
       <hr className="search-form__divider" />
-      <FilterCheckbox onChange={handleCheckboxChange}/>
+      <FilterCheckbox onChange={handleCheckboxChange} isChecked={checkbox} />
     </form>
 
   </section>

@@ -48,11 +48,11 @@ const CurrentUserProvider = ({ children }) => {
       try {
         setApiErrMsg("");
         await AuthApi.register(data);
-        const { token } = await AuthApi.authorize({
+        const res = await AuthApi.authorize({
           email: data.email,
           password: data.password
         });
-        localStorage.setItem("jwt", token);
+        localStorage.setItem("jwt", res.token);
         setCurrentUser(data);
         setApiErrMsg("");
         navigate("/movies");
