@@ -14,7 +14,7 @@ import { CurrentUserContext } from "../Contexts/UserСontext";
 function Profile() {
   const { currentUser, setCurrentUser, handleSignOut, apiErrMsg, setApiErrMsg } = useContext(CurrentUserContext);
   const [isEditing, setIsEditing] = useState(false);
-  const { values, handleChange, errors, isValid, resetForm }
+  const { values, handleChange, errors, isValid, resetForm,handleBlur }
    = useValidationHook({ email: currentUser?.name || '', password: currentUser?.email || '' });
   useEffect(() => {
     if (currentUser) {
@@ -62,6 +62,7 @@ function Profile() {
                   placeholder="Имя"
                   value={values.name || ''}
                   onChange={handleChange}
+                  onBlur={handleBlur}
                   minLength="2"
                   maxLength="30"
                   className={`profile__input${isEditing ? ' profile__input_active' : ''}`}
@@ -78,10 +79,9 @@ function Profile() {
                   value={values.email || ''}
                   placeholder="Email"
                   minLength="2"
-                  // pattern={emailRegex}
                   maxLength="30"
                   onChange={handleChange}
-              
+                  onBlur={handleBlur}
                   className={`profile__input${isEditing ? ' profile__input_active' : ''}`}
                   disabled={!isEditing}
                   required
@@ -96,7 +96,6 @@ function Profile() {
                 <button
                   type="submit"
                   className={`auth__submit-button ${!isValid && 'auth__submit-button_disabled'}`}
-               
                   onClick={handleSubmit}
                   disabled={!isValid}
                 >

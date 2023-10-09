@@ -2,7 +2,7 @@
 import Preloader from "../Preloader/Preloader";
 import MainApi from "../../utils/MainApi";
 import AuthApi from "../../utils/AuthApi";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { createContext } from "react";
 import { useState } from "react";
 import { useEffect } from "react";
@@ -11,9 +11,17 @@ export const CurrentUserContext = createContext({});
 
 const CurrentUserProvider = ({ children }) => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [currentUser, setCurrentUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [apiErrMsg, setApiErrMsg] = useState("");
+
+  //Блокировка входа на страницы регистрации и авторизации если пользователь уже зашел на фильмы
+  useEffect(() => {
+    if (currentUser && (location.pathname === '/signin' || location.pathname === '/signup')) {
+      navigate('/movies');
+    }
+  }, [currentUser, location, navigate]);
 
 //Получение токена и проброс в локальное хранилище
   useEffect(() => {
