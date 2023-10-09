@@ -1,73 +1,49 @@
 import { useState, useCallback } from "react";
 
 
-
 function useValidationHook() {
   const [values, setValues] = useState({});
   const [errors, setErrors] = useState({});
   const [isValid, setIsValid] = useState(false);
 
-  const handleChange = useCallback((evt) => {
-    const { target } = evt;
-    const { name, value } = target;
-    setValues((prevValues) => ({ ...prevValues, [name]: value }));
-  }, []);
-
-  const handleBlur = useCallback((evt) => {
-    const { target } = evt;
-    const { name, value } = target;
-
+  const validate = useCallback((name, value) => {
     if (name === 'name') {
       if (!value.match(/^[A-Za-zА-Яа-я0-9]+$/)) {
-        setErrors((prevErrors) => ({
-          ...prevErrors,
-          [name]: 'Имя должно содержать только буквы и допускаются цифры',
-        }));
+        return 'Имя должно содержать только буквы и допускаются цифры';
       } else if (value.length < 2) {
-        setErrors((prevErrors) => ({
-          ...prevErrors,
-          [name]: 'Имя должно содержать не менее 2 символов',
-        }));
-      } else {
-        setErrors((prevErrors) => ({ ...prevErrors, [name]: '' }));
+        return 'Имя должно содержать не менее 2 символов';
       }
     }
 
     if (name === 'email') {
       if (!value) {
-        setErrors((prevErrors) => ({ ...prevErrors, [name]: 'Почта должна быть заполнена' }));
+        return 'Почта должна быть заполнена';
       } else if (!value.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
-        setErrors((prevErrors) => ({
-          ...prevErrors,
-          [name]: 'Некорректный формат адреса почты',
-        }));
-      } else {
-        setErrors((prevErrors) => ({ ...prevErrors, [name]: '' }));
+        return 'Некорректный формат адреса почты';
       }
     }
 
     if (name === 'password') {
       if (!value) {
-        setErrors((prevErrors) => ({ ...prevErrors, [name]: 'Пароль должен быть заполнен' }));
+        return 'Пароль должен быть заполнен';
       } else if (value.length < 3) {
-        setErrors((prevErrors) => ({
-          ...prevErrors,
-          [name]: 'Пароль должен содержать не менее 3 символов',
-        }));
-      }
-      //  else if (!value.match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{3,}$/)) {
-      //   setErrors((prevErrors) => ({
-      //     ...prevErrors,
-      //     [name]:
-      //       'Пароль должен содержать символы верхнего и нижнего регистра, а также цифры',
-      //   }));
-      // }
-       else {
-        setErrors((prevErrors) => ({ ...prevErrors, [name]: '' }));
+        return 'Пароль должен содержать не менее 3 символов';
       }
     }
-    setIsValid(target.closest("form").checkValidity());
+
+    return '';
   }, []);
+
+  const handleChange = useCallback((evt) => {
+    const { target } = evt;
+    const { name, value } = target;
+    setValues((prevValues) => ({ ...prevValues, [name]: value }));
+    const error = validate(name, value);
+    setErrors((prevErrors) => ({ ...prevErrors, [name]: error }));
+    setIsValid(target.closest("form").checkValidity());
+  }, [validate]);
+
+  const handleBlur = handleChange;
 
   const resetForm = useCallback((newValues = {}, newErrors = {}, newIsValid = false) => {
     setValues(newValues);
