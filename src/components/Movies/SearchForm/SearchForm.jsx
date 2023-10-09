@@ -1,11 +1,10 @@
 import React, { useCallback } from "react";
-
 import "./SearchForm.css"
-
 import { useState } from "react";
 import FilterCheckbox from "../FilterCheckbox/FilterCheckbox";
 
-function SearchForm({ onSubmit, searchKeyword, isChecked, onError, isOnSavedMoviesPage }) {
+function SearchForm({ onSubmit, onError, isOnSavedMoviesPage }) {
+  
   const [input, setInput] = useState(() => {
     const savedSearch = localStorage.getItem('searchKeyword');
     return savedSearch !== null ? savedSearch : '';

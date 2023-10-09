@@ -2,8 +2,9 @@ import AuthForm from '../AuthForm/AuthForm';
 import MyInput from '../MyInput/MyInput';
 import "./Register.css";
 import useValidationHook from "../../hooks/useValidationHook";
-import { CurrentUserContext } from '../Contexts/UserСontext';
+
 import { useContext } from 'react';
+import { CurrentUserContext } from '../../Contexts/UserСontext';
 
 
 function Register() {

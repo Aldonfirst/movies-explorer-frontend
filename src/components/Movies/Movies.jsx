@@ -6,13 +6,12 @@ import Footer from "../Footer/Footer";
 import { useState } from "react";
 import { useEffect } from "react";
 import Preloader from "../Preloader/Preloader";
-
 import { useContext } from "react";
-import { MoviesContext } from "../Contexts/MovieContext";
 import { getMovies } from "../../utils/MoviesApi";
 import { useCallback } from "react";
 import { filterMovies } from "../../utils/filterMovies";
-import { CurrentUserContext } from "../Contexts/UserСontext";
+import { CurrentUserContext } from "../../Contexts/UserСontext";
+import { MoviesContext } from "../../Contexts/MovieContext";
 
 
 function Movies() {

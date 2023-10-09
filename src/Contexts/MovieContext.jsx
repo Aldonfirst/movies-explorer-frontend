@@ -1,9 +1,8 @@
 import React, { useState, useEffect, useContext } from "react";
-
 import { useCallback } from "react";
 import { createContext } from "react";
-import api from "../../utils/MainApi";
-import MainApi from "../../utils/MainApi";
+
+import MainApi from "../utils/MainApi";
 import { CurrentUserContext } from "./UserСontext";
 
 export const MoviesContext = createContext([]);
@@ -30,7 +29,7 @@ export function MoviesProvider({ children }) {
  // Функция для сохранения фильма по лайку на страницу SavedMovies
   const saveMovie = useCallback(async(movie) => {
     try {
-      const data = await api.addMovieToFavorite(movie);
+      const data = await MainApi.addMovieToFavorite(movie);
       setSavedMovies((saved) => [...saved, data]);
       return data;
     } catch (error) {
@@ -40,7 +39,7 @@ export function MoviesProvider({ children }) {
  // Функция для удаления фильма из станицы SavedMovies
   const removeMovie = useCallback(async (id) => {
     try {
-      await api.removeMovieFromFavorite(id);
+      await MainApi.removeMovieFromFavorite(id);
       setSavedMovies((saved) => saved.filter((movie) => movie._id !== id));
     } catch (error) {
       setError(error);

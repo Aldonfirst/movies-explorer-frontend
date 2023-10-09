@@ -1,11 +1,13 @@
 
-import Preloader from "../Preloader/Preloader";
-import MainApi from "../../utils/MainApi";
-import AuthApi from "../../utils/AuthApi";
+
+
 import { useLocation, useNavigate } from "react-router-dom";
 import { createContext } from "react";
 import { useState } from "react";
 import { useEffect } from "react";
+import MainApi from "../utils/MainApi";
+import AuthApi from "../utils/AuthApi";
+import Preloader from "../components/Preloader/Preloader";
 
 export const CurrentUserContext = createContext({});
 

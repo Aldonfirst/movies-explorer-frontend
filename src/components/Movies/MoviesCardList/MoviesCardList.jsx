@@ -6,8 +6,9 @@ import MoviesCard from "../MoviesCard/MoviesCard";
 import { useEffect, useState } from "react";
 import "./MoviesCardList.css";
 import useResizeHook from "../../../hooks/useResizeHook";
-import { MoviesContext } from "../../Contexts/MovieContext";
 import { useContext } from "react";
+import { MoviesContext } from "../../../Contexts/MovieContext";
+
 
 function MoviesCardList({ isSaved,movies }) {
   const { saveMovie, removeMovie } = useContext(MoviesContext);

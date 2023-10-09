@@ -1,11 +1,13 @@
 import { useState } from "react";
 import "./MoviesCard.css"
 import { useEffect } from "react";
-import { MoviesContext } from "../../Contexts/MovieContext";
+
 import { useContext } from "react";
 import { useLocation } from "react-router-dom";
 import { useCallback } from "react";
 import { MINUTES_IN_HOUR, ZERO } from "../../constants/constants";
+import { MoviesContext } from "../../../Contexts/MovieContext";
+
 
 function MoviesCard({ movie, saveMovie, removeMovie }) {
   const location = useLocation();

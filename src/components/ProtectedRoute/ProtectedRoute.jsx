@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { Navigate } from "react-router-dom";
-import { CurrentUserContext } from '../Contexts/UserСontext';
+import { CurrentUserContext } from '../../Contexts/UserСontext';
+
 
 
 function ProtectedRoute ({ element: Component, ...props }) {

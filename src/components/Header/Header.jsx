@@ -5,7 +5,8 @@ import Logo from '../HeaderLogo/Logo';
 import Navigation from '../Navigation/Navigation';
 
 import { useContext } from 'react';
-import { CurrentUserContext } from '../Contexts/UserСontext';
+import { CurrentUserContext } from '../../Contexts/UserСontext';
+
 
 
 const Header = () => {

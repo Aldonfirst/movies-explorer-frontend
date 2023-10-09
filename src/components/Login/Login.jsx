@@ -3,7 +3,8 @@ import MyInput from '../MyInput/MyInput';
 import AuthForm from '../AuthForm/AuthForm';
 import useValidationHook from "../../hooks/useValidationHook";
 import { useContext } from 'react';
-import { CurrentUserContext } from '../Contexts/UserСontext';
+import { CurrentUserContext } from '../../Contexts/UserСontext';
+
 
 
 function Login( ) {

@@ -8,7 +8,8 @@ import { useEffect } from "react";
 
 import MainApi from "../../utils/MainApi";
 import { useCallback } from "react";
-import { CurrentUserContext } from "../Contexts/UserСontext";
+import { CurrentUserContext } from "../../Contexts/UserСontext";
+
 
 
 function Profile() {
