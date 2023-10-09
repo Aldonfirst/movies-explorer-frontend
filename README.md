@@ -1,7 +1,7 @@
 Дипломный проект movie-explorer  от Яндекс практикума по специальности "Веб-разработчик".
 
 Изготовлен по макету "dark-1" 
-Ccылка на макеты:
+Вот Ccылка на макеты:
 https://www.figma.com/file/fBAb44cjDhxUDhZu4pK11u/dark-1-(Copy)?type=design&node-id=24%3A2186&mode=dev
 **************************************************************
 ссылка на страницу фронтенда level-3 :https://github.com/Aldonfirst/movies-explorer-frontend/tree/level-3
