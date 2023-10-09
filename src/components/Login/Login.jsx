@@ -5,8 +5,9 @@ import useValidationHook from "../../hooks/useValidationHook";
 import { useContext } from 'react';
 import { CurrentUserContext } from '../Contexts/UserСontext';
 
+
 function Login( ) {
-  const { values, handleChange,errors,isValid,resetForm} = useValidationHook({ email: '', password: '' });
+  const { values, handleChange,errors,isValid,resetForm,handleBlur} = useValidationHook({ email: '', password: '' });
   const { apiErrMsg, handleAuthorize, setApiErrMsg } = useContext(CurrentUserContext);
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -35,6 +36,8 @@ function Login( ) {
           onChange={handleChange}
           error={errors.email}
           htmlFor="E-mail"
+          // pattern={emailRegex}
+          onBlur={handleBlur}
         />
         <MyInput
           name="password"
@@ -44,6 +47,7 @@ function Login( ) {
           onChange={handleChange}
           error={errors.password}
           htmlFor="Пароль"
+             onBlur={handleBlur}
         />
       </AuthForm>
     </main>

@@ -10,6 +10,7 @@ import MainApi from "../../utils/MainApi";
 import { useCallback } from "react";
 import { CurrentUserContext } from "../Contexts/UserСontext";
 
+
 function Profile() {
   const { currentUser, setCurrentUser, handleSignOut, apiErrMsg, setApiErrMsg } = useContext(CurrentUserContext);
   const [isEditing, setIsEditing] = useState(false);
@@ -24,32 +25,26 @@ function Profile() {
     }
   }, [currentUser, resetForm]);
 
-  const handleSave = (evt) => {
-    evt.preventDefault();
-    setIsEditing(false);
-  };
-
-  const handleSubmit = useCallback (
-    (e) => {
-      e.preventDefault();
-      
-      if (!values.name || !values.email) {
-        setApiErrMsg("При обновлении профиля произошла ошибка.");
-        return;
-      }
   
-      MainApi.updateUser(values)
-        .then((data) => {
-          setCurrentUser({ name: data.name, email: data.email });
-          setIsEditing(false);
-          resetForm();  
-        })
-        .catch((error) => {
-          setApiErrMsg(error.message);
-        });
-    },
-    [setCurrentUser, values, resetForm,setApiErrMsg] 
-  );
+  const handleSubmit = useCallback (async (e) => {
+    e.preventDefault();
+    if (!values.name || !values.email) {
+      setApiErrMsg("При обновлении профиля произошла ошибка.");
+      return;
+    }
+    try {
+      await MainApi.updateUser(values);
+      setCurrentUser({ name: values.name, email: values.email });
+      setIsEditing(false);
+      resetForm(); 
+      setApiErrMsg('Профиль успешно обновлен'); 
+    } catch (error) {
+      setApiErrMsg(error.message);
+    } finally {
+      setTimeout(() => setApiErrMsg(""), 2000);
+    }
+  },
+  [setCurrentUser, values, resetForm, setApiErrMsg]);
 
   return (
     <>
@@ -83,8 +78,10 @@ function Profile() {
                   value={values.email || ''}
                   placeholder="Email"
                   minLength="2"
+                  // pattern={emailRegex}
                   maxLength="30"
                   onChange={handleChange}
+              
                   className={`profile__input${isEditing ? ' profile__input_active' : ''}`}
                   disabled={!isEditing}
                   required
@@ -99,7 +96,8 @@ function Profile() {
                 <button
                   type="submit"
                   className={`auth__submit-button ${!isValid && 'auth__submit-button_disabled'}`}
-                  onClick={handleSave}
+               
+                  onClick={handleSubmit}
                   disabled={!isValid}
                 >
                   Сохранить

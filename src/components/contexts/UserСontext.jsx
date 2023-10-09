@@ -65,22 +65,23 @@ const CurrentUserProvider = ({ children }) => {
     }
 
 //Функция авторизации пользователя
-  async function handleAuthorize(data){
-      try {
-        const res = await AuthApi.authorize({
-          email: data.email,
-          password: data.password
-        });
-        localStorage.setItem("jwt", res.token);
-        setCurrentUser(data);
-        navigate("/movies");
-      } catch (err) {
-        setApiErrMsg('Ошибка при авторизации.');
-      } 
-      finally {
-        setTimeout(() => setApiErrMsg(""), 2000);
-      }
-    }
+async function handleAuthorize(data){
+  try {
+    const res = await AuthApi.authorize({
+      email: data.email,
+      password: data.password
+    });
+    localStorage.setItem("jwt", res.token);
+    const userData = await MainApi.getUser(res.token); 
+    setCurrentUser(userData);
+    navigate("/movies");
+  } catch (err) {
+    setApiErrMsg('Ошибка при авторизации.');
+  } 
+  finally {
+    setTimeout(() => setApiErrMsg(""), 2000);
+  }
+}
 
   if (isLoading) {
     return <Preloader/>;

@@ -5,8 +5,9 @@ import useValidationHook from "../../hooks/useValidationHook";
 import { CurrentUserContext } from '../Contexts/UserСontext';
 import { useContext } from 'react';
 
+
 function Register() {
-  const { values, errors, handleChange, isValid, resetForm }
+  const { values, errors, handleChange, isValid, resetForm, handleBlur }
     = useValidationHook({ email: '', name: '', password: '' });
   const { apiErrMsg, handleRegister } = useContext(CurrentUserContext);
 
@@ -14,7 +15,7 @@ function Register() {
     event.preventDefault();
     
     handleRegister({
-      name: values.userName,
+      name: values.name,
       email: values.email,
       password: values.password
     })
@@ -34,13 +35,15 @@ function Register() {
         error={apiErrMsg}
       >
         <MyInput
-          name="userName"
+          name="name"
           type="text"
           placeholder="Введите ваше имя"
-          value={values.userName || ""}
+          value={values.name || ""}
           onChange={handleChange}
-          error={errors.userName}
+          onBlur={handleBlur}
+          error={errors.name}
           htmlFor="Имя"
+       
         />
         <MyInput
           name="email"
@@ -48,8 +51,10 @@ function Register() {
           placeholder="Введите e-mail"
           value={values.email || ""}
           onChange={handleChange}
+          onBlur={handleBlur}
           error={errors.email}
           htmlFor="E-mail"
+  
         />
         <MyInput
           name="password"
@@ -57,8 +62,10 @@ function Register() {
           placeholder="Введите пароль"
           value={values.password || ""}
           onChange={handleChange}
+          onBlur={handleBlur}
           error={errors.password}
           htmlFor="Пароль"
+         
         />
       </AuthForm>
     </main>
