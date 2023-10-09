@@ -1,6 +1,7 @@
 
 import React from 'react';
 import './Footer.css';
+import { MY_GIT, THIS_IS_YANDEX_PRACTICUM } from '../constants/constants';
 
 const Footer = () => {
 const currentYear = new Date().getFullYear();
@@ -10,13 +11,13 @@ const currentYear = new Date().getFullYear();
       <div className="footer__container">
         <p className="footer__year"> &copy;{currentYear}</p>
         <ul className='footer__links'>
-          <li><a href="https://practicum.yandex.ru/"
+          <li><a href={THIS_IS_YANDEX_PRACTICUM}
            className="page__hoverLink footer__github" 
            target="_blank" 
            rel="noreferrer"
            >Яндекс.Практикум</a>
            </li>
-          <li><a href="https://github.com/Aldonfirst"
+          <li><a href={MY_GIT}
            className="page__hoverLink footer__github" 
            target="_blank" 
            rel="noreferrer"

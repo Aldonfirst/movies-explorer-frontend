@@ -1,6 +1,7 @@
 import React from "react";
 import "./AboutMe.css"
 import avatar from "../../../images/картинка на аву.jpg"
+import { MY_GIT } from "../../constants/constants";
 
 
 function AboutMe() {
@@ -19,7 +20,7 @@ function AboutMe() {
             Lorem ipsum dolor sit, amet consectetur adipisicing elit.
             Enim illo nesciunt assumenda provident quia suscipit excepturi quaerat
           </p>
-        <a href="https://github.com/Aldonfirst" 
+        <a href={MY_GIT} 
          className="page__hoverLink about-me__github-link"
           target="_blank" 
           rel="noreferrer">GitHub</a>
