@@ -36,6 +36,7 @@ function useValidationHook() {
   const handleChange = useCallback((evt) => {
     const { target } = evt;
     const { name, value } = target;
+    
     setValues((prevValues) => ({ ...prevValues, [name]: value }));
     const error = validate(name, value);
     setErrors((prevErrors) => ({ ...prevErrors, [name]: error }));

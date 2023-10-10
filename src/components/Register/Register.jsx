@@ -6,11 +6,10 @@ import useValidationHook from "../../hooks/useValidationHook";
 import { useContext } from 'react';
 import { CurrentUserContext } from '../../Contexts/UserСontext';
 
-
 function Register() {
   const { values, errors, handleChange, isValid, resetForm, handleBlur }
     = useValidationHook({ email: '', name: '', password: '' });
-  const { apiErrMsg, handleRegister } = useContext(CurrentUserContext);
+  const { apiErrMsg, handleRegister,successfullyMessage } = useContext(CurrentUserContext);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -33,7 +32,8 @@ function Register() {
         buttonText="Зарегистрироваться"
         isValid={isValid}
         handleSubmit={handleSubmit}
-        error={apiErrMsg}
+        errorMsg={apiErrMsg}
+        successMsg={successfullyMessage}
       >
         <MyInput
           name="name"

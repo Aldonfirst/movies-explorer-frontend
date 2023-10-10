@@ -1,6 +1,3 @@
-
-
-
 import { useLocation, useNavigate } from "react-router-dom";
 import { createContext } from "react";
 import { useState } from "react";
@@ -17,7 +14,7 @@ const CurrentUserProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [apiErrMsg, setApiErrMsg] = useState("");
-
+  const [successfullyMessage, setSuccessfullyMessage] = useState("");
   //Блокировка входа на страницы регистрации и авторизации если пользователь уже зашел на фильмы
   useEffect(() => {
     if (currentUser && (location.pathname === '/signin' || location.pathname === '/signup')) {
@@ -50,7 +47,9 @@ const CurrentUserProvider = ({ children }) => {
     localStorage.removeItem('jwt');
     localStorage.removeItem('searchKeyword');
     localStorage.removeItem('isChecked');
-    localStorage.removeItem('movies'); 
+    localStorage.removeItem('movies');
+    localStorage.removeItem('savedMoviesIsChecked'); 
+    window.scrollTo(0, 0); // Перемещение пользователя вверх страницы
   }
 
 //Функция регистрации пользователя
@@ -65,12 +64,16 @@ const CurrentUserProvider = ({ children }) => {
         localStorage.setItem("jwt", res.token);
         setCurrentUser(data);
         setApiErrMsg("");
+        setSuccessfullyMessage("Успешно");
         navigate("/movies");
       } catch (err) {
         setApiErrMsg('Ошибка регистрации');
       } 
       finally {
-        setTimeout(() => setApiErrMsg(""), 2000);
+        setTimeout(() => {
+          setApiErrMsg("");
+          setSuccessfullyMessage('');
+        }, 2000);
       }
     }
 
@@ -84,12 +87,16 @@ async function handleAuthorize(data){
     localStorage.setItem("jwt", res.token);
     const userData = await MainApi.getUser(res.token); 
     setCurrentUser(userData);
+    setSuccessfullyMessage("Успешно");
     navigate("/movies");
   } catch (err) {
     setApiErrMsg('Ошибка при авторизации.');
   } 
   finally {
-    setTimeout(() => setApiErrMsg(""), 2000);
+    setTimeout(() => {
+      setApiErrMsg("");
+      setSuccessfullyMessage('');
+    }, 2000);
   }
 }
 
@@ -102,7 +109,8 @@ async function handleAuthorize(data){
       value={{
         currentUser,setCurrentUser,apiErrMsg,
         setApiErrMsg,handleSignOut,handleRegister,
-        handleAuthorize,
+        handleAuthorize,setSuccessfullyMessage,
+        successfullyMessage,
       }}
     >
       {children}

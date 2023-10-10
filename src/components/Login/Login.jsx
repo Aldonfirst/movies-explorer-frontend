@@ -9,7 +9,7 @@ import { CurrentUserContext } from '../../Contexts/UserСontext';
 
 function Login( ) {
   const { values, handleChange,errors,isValid,resetForm,handleBlur} = useValidationHook({ email: '', password: '' });
-  const { apiErrMsg, handleAuthorize, setApiErrMsg } = useContext(CurrentUserContext);
+  const { apiErrMsg, handleAuthorize, setApiErrMsg, successfullyMessage } = useContext(CurrentUserContext);
   const handleSubmit = (event) => {
     event.preventDefault();
     handleAuthorize(values)
@@ -27,7 +27,8 @@ function Login( ) {
         title="Рады видеть!"
         buttonText="Войти"
         isValid={isValid} 
-        error={apiErrMsg}
+        errorMsg={apiErrMsg}
+        successMsg={successfullyMessage}
       >
         <MyInput
           name="email"

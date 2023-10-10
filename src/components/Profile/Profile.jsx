@@ -10,22 +10,35 @@ import { useCallback } from "react";
 import { CurrentUserContext } from "../../Contexts/UserСontext";
 
 function Profile() {
-  const { currentUser, setCurrentUser, handleSignOut, apiErrMsg, setApiErrMsg } = useContext(CurrentUserContext);
+  const { currentUser, setCurrentUser, handleSignOut,
+    apiErrMsg, setApiErrMsg, successfullyMessage, setSuccessfullyMessage } = useContext(CurrentUserContext);
   const [isEditing, setIsEditing] = useState(false);
-  const { values, handleChange, errors, isValid, resetForm,handleBlur }
-   = useValidationHook({ email: currentUser?.name || '', password: currentUser?.email || '' });
+  const { values, handleChange, errors, isValid, resetForm, handleBlur }
+    = useValidationHook({ email: currentUser?.name || '', password: currentUser?.email || '' });
+
+  const [initialValues, setInitialValues] = useState({ name: currentUser?.name || '', email: currentUser?.email || '' });
+  const [isMessageVisible, setIsMessageVisible] = useState(false);
+
   useEffect(() => {
     if (currentUser) {
       resetForm({
         name: currentUser.name,
-        email:currentUser.email,
+        email: currentUser.email,
       }, {}, false);
+      setInitialValues({
+        name: currentUser.name,
+        email: currentUser.email,
+      });
     }
   }, [currentUser, resetForm]);
 
-  
-  const handleSubmit = useCallback (async (e) => {
+
+  const handleSubmit = useCallback(async (e) => {
     e.preventDefault();
+    if (values.name === initialValues.name && values.email === initialValues.email) {
+      setApiErrMsg("Данные не были изменены!");
+      return;
+    }
     if (!values.name || !values.email) {
       setApiErrMsg("При обновлении профиля произошла ошибка.");
       return;
@@ -34,15 +47,21 @@ function Profile() {
       await MainApi.updateUser(values);
       setCurrentUser({ name: values.name, email: values.email });
       setIsEditing(false);
-      resetForm(); 
-      setApiErrMsg('Профиль успешно обновлен'); 
+      resetForm();
+      setSuccessfullyMessage('Профиль успешно обновлен!');
+      setIsMessageVisible(true);
+      setTimeout(() => {
+        setSuccessfullyMessage('');
+        setIsMessageVisible(false);
+      }, 1500);
+      setInitialValues({ name: values.name, email: values.email });
     } catch (error) {
       setApiErrMsg(error.message);
     } finally {
       setTimeout(() => setApiErrMsg(""), 2000);
     }
   },
-  [setCurrentUser, values, resetForm, setApiErrMsg]);
+    [setCurrentUser, values, resetForm, setApiErrMsg, initialValues, setSuccessfullyMessage]);
 
   return (
     <>
@@ -88,8 +107,9 @@ function Profile() {
               <span className="profile__error">{errors.email}</span>
             </ul>
 
-            {isEditing ? (
+            {isEditing || isMessageVisible ? (
               <div className="profile__button-container">
+                <span className="profile__successfullyMessage">{successfullyMessage}</span>
                 <span className="profile__error_server">{apiErrMsg}</span>
                 <button
                   type="submit"

@@ -3,7 +3,7 @@ import Logo from "../HeaderLogo/Logo";
 
 import SubmitButton from "../SubmitButton/SubmitButton";
 
-function AuthForm({ handleSubmit, title, buttonText, children, isValid, error, isEmailValid }) {
+function AuthForm({ handleSubmit, title, buttonText, children, isValid, errorMsg, isEmailValid,successMsg }) {
 
   return (
     <section className="auth">
@@ -15,7 +15,8 @@ function AuthForm({ handleSubmit, title, buttonText, children, isValid, error, i
         <div className="auth__inputs-container">
           {children}
         </div>
-        <span className="auth__error">{error}</span>
+      
+        <span className="auth__error">{errorMsg || successMsg}</span>
         <SubmitButton
           buttonText={buttonText}
           isValid={isValid}
