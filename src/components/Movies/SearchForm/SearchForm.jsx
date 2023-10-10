@@ -3,8 +3,17 @@ import "./SearchForm.css"
 import { useState } from "react";
 import FilterCheckbox from "../FilterCheckbox/FilterCheckbox";
 
-function SearchForm({ onSubmit, onError, isOnSavedMoviesPage }) {
+function SearchForm({ onSubmit, onErrorForm, isOnSavedMoviesPage }) {
   
+//   const [input, setInput] = useState(() => {
+//     const savedSearch = localStorage.getItem('searchKeyword');
+//     return savedSearch !== null ? savedSearch : '';
+//   });
+
+// const [checkbox, setCheckbox] = useState(() => {
+//   const savedCheckbox = JSON.parse(localStorage.getItem('isChecked'));
+//   return savedCheckbox !== null ? savedCheckbox : false;
+// });
 const [input, setInput] = useState(() => {
   const savedSearch = localStorage.getItem
   (isOnSavedMoviesPage ? 'savedMoviesSearchKeyword' : 'searchKeyword');
@@ -21,6 +30,13 @@ const [checkbox, setCheckbox] = useState(() => {
   setInput(evt.target.value);
 };
 
+// Функция для обработки изменения состояния чекбокса
+// const handleCheckboxChange = useCallback(() => {
+//   const newCheckboxState = !checkbox;
+//   setCheckbox(newCheckboxState);
+//   localStorage.setItem('isChecked', JSON.stringify(newCheckboxState));
+//   onSubmit(input, newCheckboxState);
+// }, [checkbox, input, onSubmit]);
 const handleCheckboxChange = useCallback(() => {
   const newCheckboxState = !checkbox;
   setCheckbox(newCheckboxState);
@@ -33,10 +49,10 @@ const handleCheckboxChange = useCallback(() => {
 const handleSubmit = (evt) => {
   evt.preventDefault();
   if (!input && !isOnSavedMoviesPage) {
-    onError(
+    onErrorForm(
       <span className="movies__whatHappened">Введите название фильма </span>);
   } else {
-    onError('');
+    onErrorForm('');
     onSubmit(input, checkbox);
   }
 };
