@@ -1,4 +1,4 @@
-import { FILTER_TIME } from "../components/constants/constants";
+import { FILTER_TIME } from "../components/config/config";
 
 export function filterMovies(movies, searchTerm, isShort) {
     return movies.filter((movie) =>

@@ -4,11 +4,10 @@ import AuthForm from '../AuthForm/AuthForm';
 import useValidationHook from "../../hooks/useValidationHook";
 import { useContext } from 'react';
 import { CurrentUserContext } from '../../Contexts/UserСontext';
+import { MIN_LENGTH_PASSWORD } from '../config/config';
 
-
-
-function Login( ) {
-  const { values, handleChange,errors,isValid,resetForm,handleBlur} = useValidationHook({ email: '', password: '' });
+function Login() {
+  const { values, handleChange, errors, isValid, resetForm, handleBlur } = useValidationHook({ email: '', password: '' });
   const { apiErrMsg, handleAuthorize, setApiErrMsg, successfullyMessage } = useContext(CurrentUserContext);
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -23,10 +22,10 @@ function Login( ) {
   return (
     <main>
       <AuthForm
-      handleSubmit={handleSubmit}
+        handleSubmit={handleSubmit}
         title="Рады видеть!"
         buttonText="Войти"
-        isValid={isValid} 
+        isValid={isValid}
         errorMsg={apiErrMsg}
         successMsg={successfullyMessage}
       >
@@ -38,18 +37,18 @@ function Login( ) {
           onChange={handleChange}
           error={errors.email}
           htmlFor="E-mail"
-          // pattern={emailRegex}
           onBlur={handleBlur}
         />
         <MyInput
           name="password"
           type="password"
           placeholder="Введите пароль"
-          value={values.password ||""}
+          value={values.password || ""}
           onChange={handleChange}
           error={errors.password}
           htmlFor="Пароль"
-             onBlur={handleBlur}
+          onBlur={handleBlur}
+          minLength={MIN_LENGTH_PASSWORD}
         />
       </AuthForm>
     </main>
@@ -57,4 +56,3 @@ function Login( ) {
 };
 
 export default Login;
-  

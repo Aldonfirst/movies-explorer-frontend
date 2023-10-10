@@ -19,8 +19,8 @@ export function MoviesProvider({ children }) {
         try {
           const movies = await MainApi.getMovies();
           setSavedMovies(movies);
-        } catch (error) {
-          setError(error);
+        } catch (err) {
+          setError("Ошибка вывода фильмов.Пожалуйста перезапустите страницу и попробуйте еще раз");
         }
       };
       fetchSavedMovies();
@@ -32,8 +32,8 @@ export function MoviesProvider({ children }) {
       const data = await MainApi.addMovieToFavorite(movie);
       setSavedMovies((saved) => [...saved, data]);
       return data;
-    } catch (error) {
-      setError(error);
+    } catch (err) {
+      setError("Ошибка в сохранении фильма");
     }
   }, []);
  // Функция для удаления фильма из станицы SavedMovies
@@ -41,8 +41,8 @@ export function MoviesProvider({ children }) {
     try {
       await MainApi.removeMovieFromFavorite(id);
       setSavedMovies((saved) => saved.filter((movie) => movie._id !== id));
-    } catch (error) {
-      setError(error);
+    } catch (err) {
+      setError("Ошибка в удалении фильма");
     }
   }, []);
 

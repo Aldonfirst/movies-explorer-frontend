@@ -27,7 +27,7 @@ function Movies() {
     const savedCheckbox = JSON.parse(localStorage.getItem('isChecked'));
     return savedCheckbox !== null ? savedCheckbox : false;
   });
-  
+
   //  функция для получения и фильтрации фильмов
   const fetchMovies = useCallback(async (searchTerm = '', isChecked = false) => {
     if (!currentUser) {
@@ -63,15 +63,15 @@ function Movies() {
   }, [currentUser]);
   // useEffect для восстановления состояния при монтировании компонента
 
-useEffect(() => {
-  const savedSearch = localStorage.getItem('searchKeyword');
-  const savedCheckbox = JSON.parse(localStorage.getItem('isChecked'));
-  if (savedSearch !== null && savedCheckbox !== null) {
-    setSearchKeyword(savedSearch);
-    setIsChecked(savedCheckbox);
-    fetchMovies(savedSearch, savedCheckbox);
-  }
-}, [currentUser, fetchMovies]);
+  useEffect(() => {
+    const savedSearch = localStorage.getItem('searchKeyword');
+    const savedCheckbox = JSON.parse(localStorage.getItem('isChecked'));
+    if (savedSearch !== null && savedCheckbox !== null) {
+      setSearchKeyword(savedSearch);
+      setIsChecked(savedCheckbox);
+      fetchMovies(savedSearch, savedCheckbox);
+    }
+  }, [currentUser, fetchMovies]);
 
   // Функция для проверки, сохранен ли фильм
   const isSaved = (movie) => savedMovies.find((mov) => mov._id === movie._id);
@@ -84,7 +84,8 @@ useEffect(() => {
           onSubmit={fetchMovies}
           searchTerm={searchKeyword}
           isChecked={isChecked}
-          onError={setFormError}
+          onErrorForm={setFormError}
+          formError={formError}
         />
         {isLoading ? (
           <Preloader />

@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import MainApi from "../utils/MainApi";
 import AuthApi from "../utils/AuthApi";
 import Preloader from "../components/Preloader/Preloader";
+import { WAIT_MESSAGE } from "../components/config/config";
 
 export const CurrentUserContext = createContext({});
 
@@ -63,17 +64,17 @@ const CurrentUserProvider = ({ children }) => {
         });
         localStorage.setItem("jwt", res.token);
         setCurrentUser(data);
-        setApiErrMsg("");
+        setApiErrMsg("Успешно");
         setSuccessfullyMessage("Успешно");
         navigate("/movies");
       } catch (err) {
-        setApiErrMsg('Ошибка регистрации');
+        setApiErrMsg('Ошибка регистрации.');
       } 
       finally {
         setTimeout(() => {
           setApiErrMsg("");
           setSuccessfullyMessage('');
-        }, 2000);
+        }, WAIT_MESSAGE);
       }
     }
 
@@ -96,7 +97,7 @@ async function handleAuthorize(data){
     setTimeout(() => {
       setApiErrMsg("");
       setSuccessfullyMessage('');
-    }, 2000);
+    },WAIT_MESSAGE);
   }
 }
 

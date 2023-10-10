@@ -5,6 +5,7 @@ import useValidationHook from "../../hooks/useValidationHook";
 
 import { useContext } from 'react';
 import { CurrentUserContext } from '../../Contexts/UserСontext';
+import { MIN_LENGTH, MIN_LENGTH_PASSWORD } from '../config/config';
 
 function Register() {
   const { values, errors, handleChange, isValid, resetForm, handleBlur }
@@ -44,6 +45,7 @@ function Register() {
           onBlur={handleBlur}
           error={errors.name}
           htmlFor="Имя"
+          minLength={MIN_LENGTH}
        
         />
         <MyInput
@@ -66,6 +68,7 @@ function Register() {
           onBlur={handleBlur}
           error={errors.password}
           htmlFor="Пароль"
+          minLength={MIN_LENGTH_PASSWORD}
          
         />
       </AuthForm>

@@ -8,6 +8,7 @@ import { useEffect } from "react";
 import MainApi from "../../utils/MainApi";
 import { useCallback } from "react";
 import { CurrentUserContext } from "../../Contexts/UserСontext";
+import { MAX_LENGTH, MIN_LENGTH, WAIT_MESSAGE } from "../config/config";
 
 function Profile() {
   const { currentUser, setCurrentUser, handleSignOut,
@@ -53,12 +54,12 @@ function Profile() {
       setTimeout(() => {
         setSuccessfullyMessage('');
         setIsMessageVisible(false);
-      }, 1500);
+      },WAIT_MESSAGE );
       setInitialValues({ name: values.name, email: values.email });
     } catch (error) {
       setApiErrMsg(error.message);
     } finally {
-      setTimeout(() => setApiErrMsg(""), 2000);
+      setTimeout(() => setApiErrMsg(""), WAIT_MESSAGE);
     }
   },
     [setCurrentUser, values, resetForm, setApiErrMsg, initialValues, setSuccessfullyMessage]);
@@ -80,8 +81,8 @@ function Profile() {
                   value={values.name || ''}
                   onChange={handleChange}
                   onBlur={handleBlur}
-                  minLength="2"
-                  maxLength="30"
+                  minLength={MIN_LENGTH}
+                  maxLength={MAX_LENGTH}
                   className={`profile__input${isEditing ? ' profile__input_active' : ''}`}
                   disabled={!isEditing}
                   required
@@ -95,8 +96,8 @@ function Profile() {
                   name="email"
                   value={values.email || ''}
                   placeholder="Email"
-                  minLength="2"
-                  maxLength="30"
+                  minLength={MIN_LENGTH}
+                  maxLength={MAX_LENGTH}
                   onChange={handleChange}
                   onBlur={handleBlur}
                   className={`profile__input${isEditing ? ' profile__input_active' : ''}`}

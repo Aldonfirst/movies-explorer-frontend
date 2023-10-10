@@ -21,7 +21,12 @@ export const MINUTES_IN_HOUR = 60;
 export const ZERO = 0;
 //для фильтрации
 export const FILTER_TIME = 40;
-
+//для мин/мах значений в инпуте
+export const MIN_LENGTH = 2;
+export const MAX_LENGTH = 30;
+export const MIN_LENGTH_PASSWORD = 3;
+//для таймаута
+export const WAIT_MESSAGE = 2000;
 //вынос ссылкок
 export const MY_GIT = "https://github.com/Aldonfirst";
 export const THIS_IS_YANDEX_PRACTICUM ="https://practicum.yandex.ru/"

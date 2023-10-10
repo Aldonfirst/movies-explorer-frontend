@@ -5,7 +5,7 @@ import { useEffect } from "react";
 import { useContext } from "react";
 import { useLocation } from "react-router-dom";
 import { useCallback } from "react";
-import { MINUTES_IN_HOUR, ZERO } from "../../constants/constants";
+import { MINUTES_IN_HOUR, ZERO } from "../../config/config";
 import { MoviesContext } from "../../../Contexts/MovieContext";
 
 

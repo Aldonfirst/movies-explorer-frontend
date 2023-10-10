@@ -1,7 +1,7 @@
 
 import React from 'react';
 import './Footer.css';
-import { MY_GIT, THIS_IS_YANDEX_PRACTICUM } from '../constants/constants';
+import { MY_GIT, THIS_IS_YANDEX_PRACTICUM } from '../config/config';
 
 const Footer = () => {
 const currentYear = new Date().getFullYear();

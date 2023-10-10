@@ -1,7 +1,7 @@
 import React from "react";
 import "./AboutMe.css"
 import avatar from "../../../images/картинка на аву.jpg"
-import { MY_GIT } from "../../constants/constants";
+import { MY_GIT } from "../../config/config";
 
 
 function AboutMe() {

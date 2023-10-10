@@ -1,7 +1,7 @@
 import { WINDOW_WIDTH_LARGE, WINDOW_WIDTH_MEDIUM, WINDOW_WIDTH_SMALL, WINDOW_WIDTH_XSMALL, 
   CARDS_TO_SHOW_LARGE, CARDS_TO_SHOW_MEDIUM, CARDS_TO_SHOW_SMALL, CARDS_TO_SHOW_XSMALL, 
   CARDS_TO_ADD_LARGE, CARDS_TO_ADD_MEDIUM, CARDS_TO_ADD_SMALL, CARDS_TO_ADD_XSMALL 
-} from "../../constants/constants";
+} from "../../config/config";
 import MoviesCard from "../MoviesCard/MoviesCard";
 import { useEffect, useState } from "react";
 import "./MoviesCardList.css";

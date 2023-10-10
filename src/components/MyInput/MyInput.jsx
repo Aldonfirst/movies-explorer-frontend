@@ -1,4 +1,5 @@
 
+import { MAX_LENGTH } from "../config/config";
 import "./MyInput.css"
 
 function MyInput({ name, type, placeholder, value, onChange, error, htmlFor,onBlur }) {
@@ -14,8 +15,7 @@ function MyInput({ name, type, placeholder, value, onChange, error, htmlFor,onBl
         onChange={onChange}
         placeholder={placeholder}
         onBlur={onBlur}
-        minLength="3"
-        maxLength="30"
+        maxLength={MAX_LENGTH}
         required
       />
       <span className="myInput__error">{error}</span>
