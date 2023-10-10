@@ -27,8 +27,7 @@ function Movies() {
     const savedCheckbox = JSON.parse(localStorage.getItem('isChecked'));
     return savedCheckbox !== null ? savedCheckbox : false;
   });
-
-
+  
   //  функция для получения и фильтрации фильмов
   const fetchMovies = useCallback(async (searchTerm = '', isChecked = false) => {
     if (!currentUser) {
@@ -63,7 +62,8 @@ function Movies() {
     }
   }, [currentUser]);
   // useEffect для восстановления состояния при монтировании компонента
- useEffect(() => {
+
+useEffect(() => {
   const savedSearch = localStorage.getItem('searchKeyword');
   const savedCheckbox = JSON.parse(localStorage.getItem('isChecked'));
   if (savedSearch !== null && savedCheckbox !== null) {

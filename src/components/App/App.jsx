@@ -11,8 +11,8 @@ import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import { MoviesProvider } from '../../Contexts/MovieContext';
 import CurrentUserProvider from '../../Contexts/UserСontext';
 
-
 //Все обработчики запросов вложены в свои контексты для удобства и очистки файла App
+
 function App() {
   return (
     <div className="page">
