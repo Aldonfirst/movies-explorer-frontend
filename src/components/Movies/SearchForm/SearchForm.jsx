@@ -5,15 +5,6 @@ import FilterCheckbox from "../FilterCheckbox/FilterCheckbox";
 
 function SearchForm({ onSubmit, onErrorForm, isOnSavedMoviesPage }) {
   
-//   const [input, setInput] = useState(() => {
-//     const savedSearch = localStorage.getItem('searchKeyword');
-//     return savedSearch !== null ? savedSearch : '';
-//   });
-
-// const [checkbox, setCheckbox] = useState(() => {
-//   const savedCheckbox = JSON.parse(localStorage.getItem('isChecked'));
-//   return savedCheckbox !== null ? savedCheckbox : false;
-// });
 const [input, setInput] = useState(() => {
   const savedSearch = localStorage.getItem
   (isOnSavedMoviesPage ? 'savedMoviesSearchKeyword' : 'searchKeyword');
@@ -30,13 +21,6 @@ const [checkbox, setCheckbox] = useState(() => {
   setInput(evt.target.value);
 };
 
-// Функция для обработки изменения состояния чекбокса
-// const handleCheckboxChange = useCallback(() => {
-//   const newCheckboxState = !checkbox;
-//   setCheckbox(newCheckboxState);
-//   localStorage.setItem('isChecked', JSON.stringify(newCheckboxState));
-//   onSubmit(input, newCheckboxState);
-// }, [checkbox, input, onSubmit]);
 const handleCheckboxChange = useCallback(() => {
   const newCheckboxState = !checkbox;
   setCheckbox(newCheckboxState);

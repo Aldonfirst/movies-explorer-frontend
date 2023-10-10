@@ -22,6 +22,7 @@ function SavedMovies() {
 
 
   function handleSearch(term, isChecked) {
+    console.log('хендл: ', term, ' and isChecked: ', isChecked);
     setSearchTerm(term);
     setIsChecked(isChecked);
   }
@@ -34,7 +35,7 @@ function SavedMovies() {
           onSubmit={handleSearch}
           searchTerm={searchTerm || ""}
           isChecked={isChecked}
-          onError={setFormError}
+          onErrorForm = {setFormError}
           isOnSavedMoviesPage={true}
         />
         {formError &&    <span className="movies__whatHappened">{formError}</span>}
