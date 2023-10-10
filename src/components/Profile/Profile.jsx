@@ -13,11 +13,13 @@ import { MAX_LENGTH, MIN_LENGTH, WAIT_MESSAGE } from "../config/config";
 function Profile() {
   const { currentUser, setCurrentUser, handleSignOut,
     apiErrMsg, setApiErrMsg, successfullyMessage, setSuccessfullyMessage } = useContext(CurrentUserContext);
+    
   const [isEditing, setIsEditing] = useState(false);
   const { values, handleChange, errors, isValid, resetForm, handleBlur }
     = useValidationHook({ email: currentUser?.name || '', password: currentUser?.email || '' });
 
   const [initialValues, setInitialValues] = useState({ name: currentUser?.name || '', email: currentUser?.email || '' });
+  
   const [isMessageVisible, setIsMessageVisible] = useState(false);
 
   useEffect(() => {
