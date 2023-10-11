@@ -1,37 +1,43 @@
-
+import { WINDOW_WIDTH_LARGE, WINDOW_WIDTH_MEDIUM, WINDOW_WIDTH_SMALL, WINDOW_WIDTH_XSMALL, 
+  CARDS_TO_SHOW_LARGE, CARDS_TO_SHOW_MEDIUM, CARDS_TO_SHOW_SMALL, CARDS_TO_SHOW_XSMALL, 
+  CARDS_TO_ADD_LARGE, CARDS_TO_ADD_MEDIUM, CARDS_TO_ADD_SMALL, CARDS_TO_ADD_XSMALL 
+} from "../../config/config";
 import MoviesCard from "../MoviesCard/MoviesCard";
 import { useEffect, useState } from "react";
 import "./MoviesCardList.css";
 import useResizeHook from "../../../hooks/useResizeHook";
-import { MoviesContext } from "../../contexts/MovieContext";
 import { useContext } from "react";
+import { MoviesContext } from "../../../Contexts/MovieContext";
+
 
 function MoviesCardList({ isSaved,movies }) {
   const { saveMovie, removeMovie } = useContext(MoviesContext);
-  const windowWidth = useResizeHook();
+  const windowWidth = useResizeHook();//кастомный хук ресайза
   const [cardsToShow, setCardsToShow] = useState(16);
 
+// Re-render количества карточек в зависимости от ширины окна.
   useEffect(() => {
-    if (windowWidth >= 1280 || (windowWidth >= 1250 && windowWidth)) {
-      setCardsToShow(16);
-    } else if (windowWidth >= 990 && windowWidth < 1250) {
-      setCardsToShow(12);
-    } else if (windowWidth >= 690 && windowWidth < 990) {
-      setCardsToShow(8);
-    } else if (windowWidth >= 300 && windowWidth < 690) {
-      setCardsToShow(5);
+    if (windowWidth >= WINDOW_WIDTH_LARGE) {
+      setCardsToShow(CARDS_TO_SHOW_LARGE);
+    } else if (windowWidth >= WINDOW_WIDTH_MEDIUM && windowWidth < WINDOW_WIDTH_LARGE) {
+      setCardsToShow(CARDS_TO_SHOW_MEDIUM);
+    } else if (windowWidth >= WINDOW_WIDTH_SMALL && windowWidth < WINDOW_WIDTH_MEDIUM) {
+      setCardsToShow(CARDS_TO_SHOW_SMALL);
+    } else if (windowWidth >= WINDOW_WIDTH_XSMALL && windowWidth < WINDOW_WIDTH_SMALL) {
+      setCardsToShow(CARDS_TO_SHOW_XSMALL);
     }
   }, [windowWidth]);
 
+  //Добавление дополнительных карточек при нажатии на кнопку "Еще" в зависимости от ширины окна
   const handleShowMore = () => {
-    if (windowWidth >= 300 && windowWidth < 690) {
-      setCardsToShow(cardsToShow + 1);
-      }else if (windowWidth >= 690 && windowWidth < 990) {
-        setCardsToShow(cardsToShow + 2);
-      }else if (windowWidth >= 990 && windowWidth < 1250) {
-        setCardsToShow(cardsToShow + 3);
+    if (windowWidth >= WINDOW_WIDTH_XSMALL && windowWidth < WINDOW_WIDTH_SMALL) {
+      setCardsToShow(cardsToShow + CARDS_TO_ADD_XSMALL);
+    } else if (windowWidth >= WINDOW_WIDTH_SMALL && windowWidth < WINDOW_WIDTH_MEDIUM) {
+      setCardsToShow(cardsToShow + CARDS_TO_ADD_SMALL);
+    } else if (windowWidth >= WINDOW_WIDTH_MEDIUM && windowWidth < WINDOW_WIDTH_LARGE) {
+      setCardsToShow(cardsToShow + CARDS_TO_ADD_MEDIUM);
     } else {
-      setCardsToShow(cardsToShow + 4);
+      setCardsToShow(cardsToShow + CARDS_TO_ADD_LARGE);
     }
   };
 

@@ -51,6 +51,14 @@
     height: 31px;
 }
 
+.profile__successfullyMessage {
+    color: #0b8626;
+    font-size: 16px;
+    font-weight: 500;
+    text-align: center;
+    height: 30px;
+}
+
 .profile__label {
     list-style: none;
     display: flex;
@@ -81,7 +89,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    margin-top: 66px;
+
 }
 
 .profile__link {
@@ -125,4 +133,7 @@
         padding: 70px 0 76px;
     }
 
+    .profile__successfullyMessage {
+        font-size: 12px;
+    }
 }

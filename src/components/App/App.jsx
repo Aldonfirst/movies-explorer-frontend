@@ -8,9 +8,11 @@ import Login from '../Login/Login';
 import Profile from '../Profile/Profile';
 import NotFound404 from '../NotFound404/NotFound404';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
-import CurrentUserProvider from '../contexts/Сontexts';
-import { MoviesProvider } from '../contexts/MovieContext';
+import { MoviesProvider } from '../../Contexts/MovieContext';
+import CurrentUserProvider from '../../Contexts/UserСontext';
+
 //Все обработчики запросов вложены в свои контексты для удобства и очистки файла App
+
 function App() {
   return (
     <div className="page">

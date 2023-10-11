@@ -3,11 +3,12 @@ import MyInput from '../MyInput/MyInput';
 import AuthForm from '../AuthForm/AuthForm';
 import useValidationHook from "../../hooks/useValidationHook";
 import { useContext } from 'react';
-import { CurrentUserContext } from '../contexts/Сontexts';
+import { CurrentUserContext } from '../../Contexts/UserСontext';
+import { MIN_LENGTH_PASSWORD } from '../config/config';
 
-function Login( ) {
-  const { values, handleChange,errors,isValid,resetForm} = useValidationHook({ email: '', password: '' });
-  const { apiErrMsg, handleAuthorize, setApiErrMsg } = useContext(CurrentUserContext);
+function Login() {
+  const { values, handleChange, errors, isValid, resetForm, handleBlur } = useValidationHook({ email: '', password: '' });
+  const { apiErrMsg, handleAuthorize, setApiErrMsg, successfullyMessage } = useContext(CurrentUserContext);
   const handleSubmit = (event) => {
     event.preventDefault();
     handleAuthorize(values)
@@ -21,11 +22,12 @@ function Login( ) {
   return (
     <main>
       <AuthForm
-      handleSubmit={handleSubmit}
+        handleSubmit={handleSubmit}
         title="Рады видеть!"
         buttonText="Войти"
-        isValid={isValid} 
-        error={apiErrMsg}
+        isValid={isValid}
+        errorMsg={apiErrMsg}
+        successMsg={successfullyMessage}
       >
         <MyInput
           name="email"
@@ -35,15 +37,18 @@ function Login( ) {
           onChange={handleChange}
           error={errors.email}
           htmlFor="E-mail"
+          onBlur={handleBlur}
         />
         <MyInput
           name="password"
           type="password"
           placeholder="Введите пароль"
-          value={values.password ||""}
+          value={values.password || ""}
           onChange={handleChange}
           error={errors.password}
           htmlFor="Пароль"
+          onBlur={handleBlur}
+          minLength={MIN_LENGTH_PASSWORD}
         />
       </AuthForm>
     </main>
@@ -51,4 +56,3 @@ function Login( ) {
 };
 
 export default Login;
-  

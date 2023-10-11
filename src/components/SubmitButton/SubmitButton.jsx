@@ -8,6 +8,7 @@ const SubmitButton = ({ buttonText, isValid }) => {
         <button
           className={`auth__submit-button ${!isValid && "auth__submit-button_disabled"}`}
           type="submit"
+          disabled={!isValid}
         >
           {buttonText}
         </button>

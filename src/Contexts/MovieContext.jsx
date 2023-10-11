@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useContext } from "react";
-import { CurrentUserContext } from "./Сontexts";
 import { useCallback } from "react";
 import { createContext } from "react";
-import api from "../../utils/MainApi";
-import MainApi from "../../utils/MainApi";
+
+import MainApi from "../utils/MainApi";
+import { CurrentUserContext } from "./UserСontext";
 
 export const MoviesContext = createContext([]);
 
@@ -19,9 +19,8 @@ export function MoviesProvider({ children }) {
         try {
           const movies = await MainApi.getMovies();
           setSavedMovies(movies);
-         
-        } catch (error) {
-          setError(error);
+        } catch (err) {
+          setError("Ошибка вывода фильмов.Пожалуйста перезапустите страницу и попробуйте еще раз");
         }
       };
       fetchSavedMovies();
@@ -30,20 +29,20 @@ export function MoviesProvider({ children }) {
  // Функция для сохранения фильма по лайку на страницу SavedMovies
   const saveMovie = useCallback(async(movie) => {
     try {
-      const data = await api.addMovieToFavorite(movie);
+      const data = await MainApi.addMovieToFavorite(movie);
       setSavedMovies((saved) => [...saved, data]);
       return data;
-    } catch (error) {
-      setError(error);
+    } catch (err) {
+      setError("Ошибка в сохранении фильма");
     }
   }, []);
  // Функция для удаления фильма из станицы SavedMovies
   const removeMovie = useCallback(async (id) => {
     try {
-      await api.removeMovieFromFavorite(id);
+      await MainApi.removeMovieFromFavorite(id);
       setSavedMovies((saved) => saved.filter((movie) => movie._id !== id));
-    } catch (error) {
-      setError(error);
+    } catch (err) {
+      setError("Ошибка в удалении фильма");
     }
   }, []);
 

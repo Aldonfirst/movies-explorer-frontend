@@ -5,7 +5,9 @@ import Logo from '../HeaderLogo/Logo';
 import Navigation from '../Navigation/Navigation';
 
 import { useContext } from 'react';
-import  { CurrentUserContext } from '../contexts/Сontexts';
+import { CurrentUserContext } from '../../Contexts/UserСontext';
+
+
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);

@@ -1,34 +1,42 @@
 import React, { useCallback } from "react";
-
 import "./SearchForm.css"
-
 import { useState } from "react";
 import FilterCheckbox from "../FilterCheckbox/FilterCheckbox";
 
-function SearchForm({ onSubmit, searchKeyword, isChecked, onError, isOnSavedMoviesPage }) {
-  const [input, setInput] = useState(searchKeyword || '');
-  const [checkbox, setCheckbox] = useState(isChecked || false);
+function SearchForm({ onSubmit, onErrorForm, isOnSavedMoviesPage }) {
   
+const [input, setInput] = useState(() => {
+  const savedSearch = localStorage.getItem
+  (isOnSavedMoviesPage ? 'savedMoviesSearchKeyword' : 'searchKeyword');
+  return savedSearch !== null ? savedSearch : '';
+});
+
+const [checkbox, setCheckbox] = useState(() => {
+  const savedCheckbox = JSON.parse(localStorage.getItem
+  (isOnSavedMoviesPage ? 'savedMoviesIsChecked' : 'isChecked'));
+  return savedCheckbox !== null ? savedCheckbox : false;
+});
  // Функция для обработки изменения текстового поля
  const handleInputChange = (evt) => {
   setInput(evt.target.value);
 };
 
-// Функция для обработки изменения состояния чекбокса
 const handleCheckboxChange = useCallback(() => {
   const newCheckboxState = !checkbox;
   setCheckbox(newCheckboxState);
+  localStorage.setItem(isOnSavedMoviesPage ? 'savedMoviesIsChecked'
+   : 'isChecked', JSON.stringify(newCheckboxState));
   onSubmit(input, newCheckboxState);
-}, [checkbox, input, onSubmit]);
+}, [checkbox, input, onSubmit, isOnSavedMoviesPage]);
 
 // Функция для обработки отправки формы
 const handleSubmit = (evt) => {
   evt.preventDefault();
   if (!input && !isOnSavedMoviesPage) {
-    onError(
+    onErrorForm(
       <span className="movies__whatHappened">Введите название фильма </span>);
   } else {
-    onError('');
+    onErrorForm('');
     onSubmit(input, checkbox);
   }
 };
@@ -52,7 +60,7 @@ return (
         Найти
       </button>
       <hr className="search-form__divider" />
-      <FilterCheckbox onChange={handleCheckboxChange}/>
+      <FilterCheckbox onChange={handleCheckboxChange} isChecked={checkbox} />
     </form>
 
   </section>

@@ -6,12 +6,13 @@ import Footer from "../Footer/Footer";
 import { useState } from "react";
 import { useEffect } from "react";
 import Preloader from "../Preloader/Preloader";
-import { CurrentUserContext } from "../contexts/Сontexts";
 import { useContext } from "react";
-import { MoviesContext } from "../contexts/MovieContext";
 import { getMovies } from "../../utils/MoviesApi";
 import { useCallback } from "react";
 import { filterMovies } from "../../utils/filterMovies";
+import { CurrentUserContext } from "../../Contexts/UserСontext";
+import { MoviesContext } from "../../Contexts/MovieContext";
+
 
 function Movies() {
   const { savedMovies, saveMovie, removeMovie, error } = useContext(MoviesContext);
@@ -20,8 +21,13 @@ function Movies() {
   const [isLoading, setIsLoading] = useState(false);
   const [formError, setFormError] = useState("");
   const [searchKeyword, setSearchKeyword] = useState('');
-  const [isChecked, setIsChecked] = useState(false);
   const [hasNotSearch, setHasNotSearch] = useState(false);
+
+  const [isChecked, setIsChecked] = useState(() => {
+    const savedCheckbox = JSON.parse(localStorage.getItem('isChecked'));
+    return savedCheckbox !== null ? savedCheckbox : false;
+  });
+
   //  функция для получения и фильтрации фильмов
   const fetchMovies = useCallback(async (searchTerm = '', isChecked = false) => {
     if (!currentUser) {
@@ -56,15 +62,17 @@ function Movies() {
     }
   }, [currentUser]);
   // useEffect для восстановления состояния при монтировании компонента
+
   useEffect(() => {
     const savedSearch = localStorage.getItem('searchKeyword');
     const savedCheckbox = JSON.parse(localStorage.getItem('isChecked'));
-    if (savedSearch || savedCheckbox) {
+    if (savedSearch !== null && savedCheckbox !== null) {
       setSearchKeyword(savedSearch);
       setIsChecked(savedCheckbox);
       fetchMovies(savedSearch, savedCheckbox);
     }
   }, [currentUser, fetchMovies]);
+
   // Функция для проверки, сохранен ли фильм
   const isSaved = (movie) => savedMovies.find((mov) => mov._id === movie._id);
 
@@ -76,7 +84,8 @@ function Movies() {
           onSubmit={fetchMovies}
           searchTerm={searchKeyword}
           isChecked={isChecked}
-          onError={setFormError}
+          onErrorForm={setFormError}
+          formError={formError}
         />
         {isLoading ? (
           <Preloader />

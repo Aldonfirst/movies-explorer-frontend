@@ -1,38 +1,44 @@
 import { useState } from "react";
 import "./MoviesCard.css"
 import { useEffect } from "react";
-import { MoviesContext } from "../../contexts/MovieContext";
+
 import { useContext } from "react";
 import { useLocation } from "react-router-dom";
 import { useCallback } from "react";
+import { MINUTES_IN_HOUR, ZERO } from "../../config/config";
+import { MoviesContext } from "../../../Contexts/MovieContext";
+
 
 function MoviesCard({ movie, saveMovie, removeMovie }) {
   const location = useLocation();
   const { savedMovies } = useContext(MoviesContext);
-  const [isSaved, setIsSaved] = useState(false);
+  const [isSaved, setIsSaved]= useState(false);
   const [imageUrl, setImageUrl] = useState(null);
   const [foundMovie, setFoundMovie] = useState(null);
+
   // Вычисление длительности фильма
   const formatDuration = () => {
-    const hours = Math.floor(movie.duration / 60);
-    const minutes = movie.duration % 60;
+    const hours = Math.floor(movie.duration / MINUTES_IN_HOUR);
+    const minutes = movie.duration % MINUTES_IN_HOUR;
     let durationString = "";
-    if (hours > 0) {
+    if (hours >  ZERO) {
       durationString += `${hours}ч`;
-    } if (minutes > 0) {
-      if (durationString.length > 0) {
+    } if (minutes >  ZERO) {
+      if (durationString.length >  ZERO) {
         durationString += " ";
       }
       durationString += `${minutes}м`;
     }
     return durationString;
   };
+
   //проверка - сохранен ли фильм пользователем
   useEffect(() => {
     const found = savedMovies.find((savedMovie) => savedMovie.movieId === movie.id);
     setFoundMovie(found);
     setIsSaved(!!found);
   }, [movie.id, savedMovies]);
+
   //  получение URL изображения фильма чтобы  при перемещении на SavedMovies не ломалась
   useEffect(() => {
     if (typeof movie.image === "object") {
@@ -41,10 +47,10 @@ function MoviesCard({ movie, saveMovie, removeMovie }) {
       setImageUrl(movie.image);
     }
   }, [movie.image]);
+
   //  обработка нажатия лайка добавления/удаления фильма
   const handleLikeClick = useCallback(async (evt) => {
     evt.preventDefault();
-
     if (location.pathname === "/movies") {
       if (!isSaved) {
         saveMovie(movie);

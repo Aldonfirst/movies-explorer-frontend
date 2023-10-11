@@ -5,50 +5,66 @@ import Header from "../Header/Header";
 import useValidationHook from "../../hooks/useValidationHook";
 import { useContext } from "react";
 import { useEffect } from "react";
-import { CurrentUserContext} from "../contexts/Сontexts";
 import MainApi from "../../utils/MainApi";
 import { useCallback } from "react";
+import { CurrentUserContext } from "../../Contexts/UserСontext";
+import { MAX_LENGTH, MIN_LENGTH, WAIT_MESSAGE } from "../config/config";
 
 function Profile() {
-  const { currentUser, setCurrentUser, handleSignOut, apiErrMsg, setApiErrMsg } = useContext(CurrentUserContext);
+  const { currentUser, setCurrentUser, handleSignOut,
+    apiErrMsg, setApiErrMsg, successfullyMessage, setSuccessfullyMessage } = useContext(CurrentUserContext);
+    
   const [isEditing, setIsEditing] = useState(false);
-  const { values, handleChange, errors, isValid, resetForm }
-   = useValidationHook({ email: currentUser?.name || '', password: currentUser?.email || '' });
+  const { values, handleChange, errors, isValid, resetForm, handleBlur }
+    = useValidationHook({ email: currentUser?.name || '', password: currentUser?.email || '' });
+
+  const [initialValues, setInitialValues] = useState({ name: currentUser?.name || '', email: currentUser?.email || '' });
+  
+  const [isMessageVisible, setIsMessageVisible] = useState(false);
+
   useEffect(() => {
     if (currentUser) {
       resetForm({
         name: currentUser.name,
-        email:currentUser.email,
+        email: currentUser.email,
       }, {}, false);
+      setInitialValues({
+        name: currentUser.name,
+        email: currentUser.email,
+      });
     }
   }, [currentUser, resetForm]);
 
-  const handleSave = (evt) => {
-    evt.preventDefault();
-    setIsEditing(false);
-  };
 
-  const handleSubmit = useCallback (
-    (e) => {
-      e.preventDefault();
-      
-      if (!values.name || !values.email) {
-        setApiErrMsg("При обновлении профиля произошла ошибка.");
-        return;
-      }
-  
-      MainApi.updateUser(values)
-        .then((data) => {
-          setCurrentUser({ name: data.name, email: data.email });
-          setIsEditing(false);
-          resetForm();  
-        })
-        .catch((error) => {
-          setApiErrMsg(error.message);
-        });
-    },
-    [setCurrentUser, values, resetForm,setApiErrMsg] 
-  );
+  const handleSubmit = useCallback(async (e) => {
+    e.preventDefault();
+    if (values.name === initialValues.name && values.email === initialValues.email) {
+      setApiErrMsg("Данные не были изменены!");
+      return;
+    }
+    if (!values.name || !values.email) {
+      setApiErrMsg("При обновлении профиля произошла ошибка.");
+      return;
+    }
+    try {
+      await MainApi.updateUser(values);
+      setCurrentUser({ name: values.name, email: values.email });
+      setIsEditing(false);
+      resetForm();
+      setSuccessfullyMessage('Профиль успешно обновлен!');
+      setIsMessageVisible(true);
+      setTimeout(() => {
+        setSuccessfullyMessage('');
+        setIsMessageVisible(false);
+      },WAIT_MESSAGE );
+      setInitialValues({ name: values.name, email: values.email });
+    } catch (error) {
+      setApiErrMsg(error.message);
+    } finally {
+      setTimeout(() => setApiErrMsg(""), WAIT_MESSAGE);
+    }
+  },
+    [setCurrentUser, values, resetForm, setApiErrMsg, initialValues, setSuccessfullyMessage]);
 
   return (
     <>
@@ -66,8 +82,9 @@ function Profile() {
                   placeholder="Имя"
                   value={values.name || ''}
                   onChange={handleChange}
-                  minLength="2"
-                  maxLength="30"
+                  onBlur={handleBlur}
+                  minLength={MIN_LENGTH}
+                  maxLength={MAX_LENGTH}
                   className={`profile__input${isEditing ? ' profile__input_active' : ''}`}
                   disabled={!isEditing}
                   required
@@ -81,9 +98,10 @@ function Profile() {
                   name="email"
                   value={values.email || ''}
                   placeholder="Email"
-                  minLength="2"
-                  maxLength="30"
+                  minLength={MIN_LENGTH}
+                  maxLength={MAX_LENGTH}
                   onChange={handleChange}
+                  onBlur={handleBlur}
                   className={`profile__input${isEditing ? ' profile__input_active' : ''}`}
                   disabled={!isEditing}
                   required
@@ -92,13 +110,14 @@ function Profile() {
               <span className="profile__error">{errors.email}</span>
             </ul>
 
-            {isEditing ? (
+            {isEditing || isMessageVisible ? (
               <div className="profile__button-container">
+                <span className="profile__successfullyMessage">{successfullyMessage}</span>
                 <span className="profile__error_server">{apiErrMsg}</span>
                 <button
                   type="submit"
                   className={`auth__submit-button ${!isValid && 'auth__submit-button_disabled'}`}
-                  onClick={handleSave}
+                  onClick={handleSubmit}
                   disabled={!isValid}
                 >
                   Сохранить
